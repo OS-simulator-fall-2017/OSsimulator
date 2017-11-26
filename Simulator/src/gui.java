@@ -53,20 +53,20 @@ public class gui extends Application {
         table.getColumns().addAll(nameColumn, arrivalColumn, runColumn);
         
         button = new Button();
-        button.setText("Click Me");
+        button.setText("Submit");
         VBox center = new VBox();
-        center.getChildren().addAll(button, table);
+        center.getChildren().add(table);
         
         button.setOnAction(e -> Commands(CommandInput) );
         
         CommandInput = new TextField();
           
         HBox Input = new HBox();
-        Input.getChildren().add(CommandInput);
+        Input.getChildren().addAll(CommandInput, button);
                  
         layout = new BorderPane();
-        layout.setTop(center);
-        layout.setBottom(Input);
+        layout.setTop(Input);
+        layout.setBottom(center);
        
         Scene scene = new Scene(layout, 500, 500);
         primaryStage.setScene(scene);
