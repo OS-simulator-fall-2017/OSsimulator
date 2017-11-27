@@ -10,6 +10,8 @@ public class CPU {
 		this.currentProcess.setState(ProcessState.RUN);
 	}
 	
+	
+	
 	/*
 	public Process execute(){
 		currentProcess.incrementTime();
