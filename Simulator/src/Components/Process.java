@@ -6,6 +6,7 @@ public class Process {
 	
 	private ProcessState processState;
 	private String processName;
+	private int calcTime=0;
 	private int processMemory;
 	private int processTime;
 	private int processID;
@@ -13,6 +14,7 @@ public class Process {
 	private int timeSpent=0;
 	private int ioRequestsPerformed=0;
 	private int arrivalTime;
+	private boolean flag;
 
 	private ArrayList <String> processCommands = new ArrayList<>();
 	
@@ -45,6 +47,9 @@ public class Process {
 	public void setArrivalTime(int time){
 		this.arrivalTime = time;
 	}
+	public void setCalcTime(int t){
+		this.calcTime = t;
+	}
 	
 
 	//Getter methods for all fields of Process()
@@ -69,6 +74,15 @@ public class Process {
 	public int getArrivalTime(){
 		return arrivalTime;
 	}
+	public int getWait(){
+		return Clock.getClock()-this.arrivalTime;
+	}
+	public int getCalcTime(){
+		return this.calcTime;
+	}
+	public ArrayList<String> getProcessCommands(){
+		return this.processCommands;
+	}
 	
 	
 	//Incrementing methods for process
@@ -77,6 +91,9 @@ public class Process {
 	}
 	public void incrementIORequests(){
 		this.ioRequestsPerformed++;
+	}
+	public void decremementtCalcTime(){
+		this.calcTime--;
 	}
 
 	public void printProcessInfo(){
