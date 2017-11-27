@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Scanner;
 
+import GUI.GuiPrompt;
+import javafx.scene.control.TextField;
+
 
 public class CommandLine {
 
@@ -45,8 +48,39 @@ public class CommandLine {
 	    }
 	 
 	 
+	 public static boolean Commands(TextField input) {
+		 if(input.getText().equals("proc")) {
+			 GuiPrompt.println("No processes are current running.");
+	         return true; 
+	         }
+		 
+		 if(input.getText().equals("mem")) {
+			 return true;
+		 }
+		 
+		 if(input.getText().equals("load")) {
+			 return true;  
+		 }
+		 
+		 if(input.getText().equals("exe")) {
+			 return true;
+		 }
+		 
+		 if(input.getText().equals("reset")) {
+			 return true;
+		 }
+		 
+		 if(input.getText().equals("exit")) {
+			 return true;
+		 }
+		 
+	System.out.println("Error: not a proper command");
+	return false;
+}
+	 
 	 
 	//Getter methods for the few fields of this class
+	 
 	 public ArrayList<String> getQueue() {
 	        return tokens;
 	    }

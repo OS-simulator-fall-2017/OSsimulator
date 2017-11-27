@@ -1,3 +1,5 @@
+package GUI;
+
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -17,9 +19,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javax.swing.JTable;
+import Components.CommandLine;
 
 public class gui extends Application {
 
+	
     Button button;
     private BorderPane layout;
     private TextField CommandInput;
@@ -33,8 +37,10 @@ public class gui extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("OS 312");
+    	        primaryStage.setTitle("OS 312");
         
+    	        
+    	        
       //Name column
         TableColumn<testTable, String> nameColumn = new TableColumn<>("Job");
         nameColumn.setMinWidth(200);
@@ -52,12 +58,20 @@ public class gui extends Application {
         table.setItems(getTestTable());
         table.getColumns().addAll(nameColumn, arrivalColumn, runColumn);
         
+        
+        textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setFocusTraversable(false);
+        textArea.setPrefRowCount(3);
+        textArea.setPrefColumnCount(50);
+        textArea.autosize();
+        
         button = new Button();
         button.setText("Submit");
         VBox center = new VBox();
-        center.getChildren().add(table);
+        center.getChildren().addAll(textArea, table);
         
-        button.setOnAction(e -> Commands(CommandInput) );
+        button.setOnAction(e -> CommandLine.Commands(CommandInput) );
         
         CommandInput = new TextField();
           
@@ -83,22 +97,6 @@ public class gui extends Application {
         return jobs;
     }
     
-    private boolean Commands(TextField input) {
-    		 if(input.getText().equals("proc"))
-    	         return true;
-    		 if(input.getText().equals("mem"))
-    			 return true;
-    		 if(input.getText().equals("load"))
-    			 return true;    
-    		 if(input.getText().equals("exe"))
-    			 return true;
-    		 if(input.getText().equals("reset"))
-    			 return true;
-    		 if(input.getText().equals("exit"))
-    			 return true;
-    	System.out.println("Error: not a proper command");
-    	return false;
-    }
     
     
 }
