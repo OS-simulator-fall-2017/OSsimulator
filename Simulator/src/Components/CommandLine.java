@@ -1,4 +1,6 @@
 package Components;
+import java.awt.TextField;
+import GUI.GuiPrompt;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -79,7 +81,24 @@ public class CommandLine {
 	    	
 	    }
 	    
-	    
+	    public static boolean Commands(javafx.scene.control.TextField commandInput) {
+   		 if(commandInput.getText().equals("proc")){
+   			 GuiPrompt.println("Testing");
+   	         return true;
+   		 }
+   		 if(commandInput.getText().equals("mem"))
+   			 return true;
+   		 if(commandInput.getText().equals("load"))
+   			 return true;    
+   		 if(commandInput.getText().equals("exe"))
+   			 return true;
+   		 if(commandInput.getText().equals("reset"))
+   			 return true;
+   		 if(commandInput.getText().equals("exit"))
+   			 return true;
+   	System.out.println("Error: not a proper command");
+   	return false;
+   }
 	    
 	    
 	    
