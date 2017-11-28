@@ -83,6 +83,9 @@ public class Process {
 	public ArrayList<String> getProcessCommands(){
 		return this.processCommands;
 	}
+	public String getNextCommand(){
+		return this.processCommands.remove(0);
+	}
 	
 	
 	//Incrementing methods for process

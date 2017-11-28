@@ -1,39 +1,51 @@
 package Components;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class CPU {
 
 	private Process currentProcess;
+	Random rand = new Random();
 	
 	
+	 public static int tickClock(){
+
+	        return Clock.tickClock();
+	    }
+	 
+	 
 	public void setCurrentProcess(Process p){
 		currentProcess = p;
 		this.currentProcess.setState(ProcessState.RUN);
 	}
+	public Process getCurrentProcess(){
+		return this.currentProcess;
+	}
 	
 	
 	
-	/*
-	public Process execute(){
-		currentProcess.incrementTime();
+	
+	public void execute(){
 		
-		if(currentProcess.getCalcTime()==0){
-			String command = currentProcess.getProcessCommands().get(0).toUpperCase();
-			
-			switch(command){
-			case ("CALCULATE"):
-				currentProcess.setCalcTime(Integer.parseInt(currentProcess.getProcessCommands().get(1)));
-				return currentProcess;
-			case ("YIELD"):
-				currentProcess.setState(ProcessState.READY);
-			case ("IO"):
-				currentProcess.setState(ProcessState.WAIT);
-			case ("OUT"):
-				currentProcess.printProcessInfo();
-			}
+		String command = currentProcess.getNextCommand().toUpperCase();
+		switch(command){
+		case ("CALCULATE"):
+			currentProcess.setState(ProcessState.RUN);
+			currentProcess.setCalcTime(Integer.parseInt(currentProcess.getNextCommand()));
+		case ("IO"):
+			currentProcess.incrementIORequests();
+			currentProcess.IORequest(rand.nextInt(26)+25);
+		case ("YIELD"):
+			currentProcess.setState(ProcessState.WAIT);
+		case ("OUT"):
+			System.out.println("Current Process Information:");
+			currentProcess.printProcessInfo();
 		}
 		
+			
 	}
-	*/
+	
 	
 	
 	

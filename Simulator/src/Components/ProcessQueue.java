@@ -82,6 +82,11 @@ public class ProcessQueue {
 		}
 	}
 	
+	public void resetQueues(){
+		this.readyQueue.clear();
+		this.waitingQueue.clear();
+	}
+	
 	
 	  
 }

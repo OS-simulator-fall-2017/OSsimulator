@@ -10,7 +10,7 @@ public class Scheduler {
 	private int ticker = 0;
 	
 	//Inserts process to either ready queue or waiting queue, wherever it can 'fit'
-	public void insertProcess(Process p){
+	public static void insertProcess(Process p){
 		if(queue.getFreeMemory()>p.getMemory()){
 			queue.enqueueReadyProcess(p);
 		}
@@ -38,7 +38,7 @@ public class Scheduler {
 		return ticker;
 	
 	}
-	//Incremements the quantum ticker 1
+	//Increments the quantum ticker 1
 	public void incremementTicker(){
 		this.ticker++;
 	}
@@ -62,6 +62,11 @@ public class Scheduler {
     
     public static int getFreeMemory(){
     	return queue.getFreeMemory();
+    }
+    
+    public void resetScheduler(){
+    	this.ticker=0;
+    	queue.resetQueues();
     }
    
     
