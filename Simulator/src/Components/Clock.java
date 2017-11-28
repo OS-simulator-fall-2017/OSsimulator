@@ -16,4 +16,8 @@ public class Clock {
     public static void resetClock() {
         time = 0;
     }
+    
+    public static void setClock(int t){
+    	time = t;
+    }
 }

@@ -11,15 +11,16 @@ import java.util.Scanner;
 public class CommandLine {
 
 	private String inputFile;
-	private String command, value;
+	private String command;
+	private String value;
 	private ArrayList<String>tokens = new ArrayList<>();
 	private Scanner scan;
 	
 	
-
+	
 	//Takes job file and stores each token in our array list 
 	public void parseJobFile(String jobFile){
-		tokens.clear();
+		this.tokens.clear();
 		File file = new File(jobFile);
         try {
 			scan = new Scanner(file);
@@ -32,7 +33,23 @@ public class CommandLine {
             }
        
         scan.close();
-        
+	}
+	
+	public void parseProgramFile(String programFile){
+		this.tokens.clear();
+		File file = new File(programFile);
+        try {
+			scan = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+            
+        while (scan.hasNext()) {
+                this.tokens.add(scan.next());
+            }
+       
+        scan.close();
+       // LoadingProgram l = new LoadingProgram(tokens,time);
 	}
 	
 	//Takes 'String command' as input (ie each line of job file)
@@ -40,40 +57,27 @@ public class CommandLine {
 	        command = command.toUpperCase();
 	        scan = new Scanner(command);
 	        this.command = scan.next();
-	        scan = null;
+	        value = null;
 	        if (scan.hasNext())
 	            value = scan.next();
 	        scan.close();
 	    }
 	 
 	 
-	 
 	//Getter methods for the few fields of this class
 	 public ArrayList<String> getQueue() {
-	        return tokens;
+	        return this.tokens;
 	    }
 
 	    public String getCommand() {
-	        return command;
+	        return this.command;
 	    }
 
 	    public String getValue() {
-	        return value;
+	        return this.value;
 	    }
 	  
-	   
-	    public static void proc(){
-	    	ArrayList<Process> ready = Scheduler.getReadyQueue();
-	    	ArrayList <Process>wait = Scheduler.getWaitingQueue();
-	    	
-	    	for(int i=0;i<ready.size();i++){
-	    		ready.get(i).printProcessInfo();
-	    	}
-	    	for(int k=0;k<wait.size();k++){
-	    		wait.get(k).printProcessInfo();
-	    	}
-	    	
-	    }
+
 	    
 	    public static void mem(){
 	    	int i = Scheduler.getFreeMemory();
@@ -111,6 +115,9 @@ public class CommandLine {
 	    
 	    
 	    
+=======
+	 
+>>>>>>> 23badcbcb8520dd75290baa4f7517b6193866ada
 	    
 	    
 	    
