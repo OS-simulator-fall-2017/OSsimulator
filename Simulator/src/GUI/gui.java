@@ -139,39 +139,33 @@ public class gui extends Application {
         VBox waitingBox = new VBox();
         waitingBox.setSpacing(10);
         Text waitingTitle = new Text("Waiting Queue");
-        waitingTitle.setStyle("-fx-font-size: 18px");
+        waitingTitle.setStyle("-fx-font-size: 15px");
         waitingBox.getChildren().addAll(waitingTitle, waitingTable);
 
         VBox readyBox = new VBox();
         readyBox.setSpacing(10);
         Text readyTitle = new Text("Ready Queue");
-        readyTitle.setStyle("-fx-font-size: 18px");
+        readyTitle.setStyle("-fx-font-size: 15px");
         readyBox.getChildren().addAll(readyTitle, readyTable);
-
-        HBox lowerBox = new HBox();
-        lowerBox.setSpacing(10);
-        lowerBox.setPadding(new Insets(10, 10, 10, 10));
-        lowerBox.getChildren().addAll(waitingBox, readyBox);
-
-        VBox upperBox = new VBox();
-        upperBox.getChildren().addAll(Input, textArea);
                  
         layout = new BorderPane();
-        layout.setTop(upperBox);
-        layout.setBottom(lowerBox);
+        layout.setTop(Input);
+        layout.setLeft(waitingBox);
+        layout.setRight(readyBox);
+        layout.setBottom(textArea);
        
         Scene scene = new Scene(layout, 1000, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
         
-        startSim();
+        //startSim();
     }
     
-    private void startSim() {
+   /* private void startSim() {
     	while(true) {
     		this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));		
     	}
-    }
+    */
     
     
     

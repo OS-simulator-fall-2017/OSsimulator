@@ -27,7 +27,7 @@ public class OperatingSystem {
 			CommandLine line = new CommandLine();
 			line.parseLine(scan.nextLine());
 			
-			switch(line.getCommand()){
+			switch(line.chooseCommand()){
 			case "PROC":
 				proc();
 				break;
@@ -35,10 +35,10 @@ public class OperatingSystem {
 				mem();
 				break;
 			case "LOAD":
-				loadProgram(line.getValue());
+				loadProgram(line.getFile());
 			case "EXE":
-				if(!line.getValue().equals(null)){
-					exe(Integer.parseInt(line.getValue()));
+				if(!line.getFile().equals(null)){
+					exe(Integer.parseInt(line.getFile()));
 				}else exe();
 			case "RESET":
 				reset();
