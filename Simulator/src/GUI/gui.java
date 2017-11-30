@@ -33,6 +33,8 @@ import Components.Process;
 import ParseText.ParseText;
 public class gui extends Application {
 
+	 private  TableView<Process> readyTable;
+	  private TableView<Process> waitingTable;
 	
 	 private final ObservableList<Process> readyProcessList = FXCollections.observableArrayList();
 	 private final ObservableList<Process> waitingProcessList = FXCollections.observableArrayList();
@@ -46,10 +48,7 @@ public class gui extends Application {
     public ArrayList<String> input;
     String temp;
    
-    
-    // Creates a table of ready process
-    TableView<Process> readyTable;
-    TableView<Process> waitingTable;
+   
    
     public static void main(String[] args) {
         launch(args);
@@ -85,19 +84,19 @@ public class gui extends Application {
         
         //Waiting Columns
         TableColumn<Process, String> name2Column = new TableColumn<>("Program");
-        nameColumn.setMinWidth(150);
+       // nameColumn.setMinWidth(150);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("processName"));
         
         TableColumn<Process, String> mem2Column = new TableColumn<>("Memory Size");
-        mem2Column.setMinWidth(75);
+        //mem2Column.setMinWidth(75);
         mem2Column.setCellValueFactory(new PropertyValueFactory<>("processMemory"));
         
         TableColumn<Process, Double> arrival2Column = new TableColumn<>("Arrival Time");
-        arrivalColumn.setMinWidth(75);
+       // arrivalColumn.setMinWidth(75);
         arrivalColumn.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         
         TableColumn<Process, String> run2Column = new TableColumn<>("Run Time");
-        runColumn.setMinWidth(75);
+        //runColumn.setMinWidth(75);
         runColumn.setCellValueFactory(new PropertyValueFactory<>("calcTime"));
         
         

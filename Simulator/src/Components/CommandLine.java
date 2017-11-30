@@ -67,11 +67,10 @@ public class CommandLine {
 	        requestFile.parseFile(file);
 	        if(!requestFile.getQueue().isEmpty()) {
 	            int size = Integer.valueOf(requestFile.getQueue().remove(0));
-	            Scheduler.insertPCB(new Process(file, size, requestFile.getQueue()));
+	            Scheduler.insertProcess(new Process(file, size, requestFile.getQueue()));
+	            
 	        }
 	        GuiPrompt.print("Load Successful \n");
-	        Process paint = Scheduler.getReadyQueue().get(0);
-	        GuiPrompt.print(paint.getName() + "\n");
 	    }
 	    
 	    
