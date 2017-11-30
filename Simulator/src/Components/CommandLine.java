@@ -52,9 +52,8 @@ public class CommandLine {
 	            case "proc": proc(); break;
 	            case "mem": mem(); break;
 	           // case "exe": exe(); break;
-	           // case "reset": reset(); break;
+	            case "reset": reset(); break;
 	            //case "exit": exit(); break;
-	         //   case "clear": clear(); break;
 	            default: break;
 	        } 
 	    }
@@ -94,6 +93,7 @@ public class CommandLine {
 	    public static void reset(){
   	    	Clock.resetClock();
   	    	Scheduler.resetScheduler();
+  	    	GuiPrompt.clear();
   	    }
   	    
   	   
