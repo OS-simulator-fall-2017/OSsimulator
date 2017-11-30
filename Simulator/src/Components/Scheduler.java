@@ -9,7 +9,7 @@ public class Scheduler {
 	private final int quantum = 10;
 	private int ticker = 0;
 	
-	  public static void insertPCB(Process process) {
+	public static void insertPCB(Process process) {
 	        process.setArrivalTime(Clock.getClock());
 	        queue.enqueueReadyProcess(process);
 	    }
