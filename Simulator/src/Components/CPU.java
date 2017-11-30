@@ -27,31 +27,34 @@ public class CPU {
 	
 	
 	
-	
 	public void execute(){
+		currentProcess.incrementTime();
 		
-		String command = currentProcess.getNextCommand().toUpperCase();
-		switch(command){
-		case ("CALCULATE"):
-			currentProcess.setState(ProcessState.RUN);
-			currentProcess.setCalcTime(Integer.parseInt(currentProcess.getNextCommand()));
-		case ("IO"):
-			currentProcess.incrementIORequests();
-			currentProcess.IORequest(rand.nextInt(26)+25);
-		case ("YIELD"):
-			currentProcess.setState(ProcessState.WAIT);
-		case ("OUT"):
-			System.out.println("Current Process Information:");
-			currentProcess.printProcessInfo();
+		if(currentProcess.getCalcTime==0){
+			String comm = currentProcess.getNextCommand();
+			switch (comm){
+			case "CALCULATE":
+				currentProcess.setState(ProcessState.RUN);
+				currentProcess.setCalcTime = currentProcess.getNextCommand();
+			case "IO":
+				currrentProcess.incrementIORequests();
+				currentProcess.setState(ProcessState.WAIT);
+				currentProcess.IOFlag=currentProcess.getNextCommand();
+			case "YIELD":
+				currentProcess.setState(ProcessState.READY);
+			case "OUT":
+				System.out.println("Currently running process:\n___________________________________")
+				currentProcess.printProcessInfo();
+			case null:
+				currentProcess.setState(ProcessState.EXIT);
+				Scheduler.removeProcess(currentProcess);
+			}
 		}
-		
+		else{
+			currentProcess.decrementCalcTime();
+		}
 
-		
 	}
-	
-	
-	
-	
 	
 	
 }

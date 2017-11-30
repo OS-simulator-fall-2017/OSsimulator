@@ -34,10 +34,8 @@ public class ProcessQueue {
 	 }
 	 
 	 public void removeProcess(Process process) {
-	        if (readyQueue.remove(process))
-	            return;
-	        else
-	            waitingQueue.remove(process);
+	      readyQueue.remove(process)
+	      freeMemory+=process.getMemory;
 	    }
 	 
 	 

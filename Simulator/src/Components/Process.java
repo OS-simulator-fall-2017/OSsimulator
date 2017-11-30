@@ -16,7 +16,7 @@ public class Process {
 	private int timeLeftToComplete=0;
 	private int ioRequestsPerformed=0;
 	private int arrivalTime;
-	private int IOflag;
+	private int IOflag=0;
 
 	private ArrayList <String> processCommands = new ArrayList<>();
 	
@@ -56,6 +56,9 @@ public class Process {
 	}
 	public void setCalcTime(int t){
 		this.calcTime = t;
+	}
+	public void setIOFlag(int t){
+		this.IOFlag=t;
 	}
 	
 
@@ -125,9 +128,10 @@ public class Process {
 		GuiPrompt.println("______________________________________");
 	}
 	
-	
-	
-	
+	public void exit(){
+		this.processState = ProcessState.EXIT;
+		Scheduler
+	}
 	
 	
 }
