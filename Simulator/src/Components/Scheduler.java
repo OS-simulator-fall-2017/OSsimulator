@@ -7,7 +7,7 @@ public class Scheduler {
 	private static ProcessQueue queue = new ProcessQueue();
 	
 	private final int quantum = 10;
-	private static int ticker = 0;
+	private static int timer = 0;
 	
 	public static void insertPCB(Process process) {
 	        process.setArrivalTime(Clock.getClock());
@@ -24,8 +24,8 @@ public class Scheduler {
 	}
 	
 	//Removes process from top of readyQueue, can be used to pop to CPU
-	public void removeProcess(){
-		queue.dequeueReadyProcess();
+	public Process removeProcess(){
+		return queue.dequeueReadyProcess();
 	}
 	
 	
@@ -39,13 +39,13 @@ public class Scheduler {
 	}
 	
 	//Returns the quantum ticker
-	public int getTicker(){
-		return ticker;
+	public int getTimer(){
+		return timerr;
 	
 	}
 	//Increments the quantum ticker 1
-	public void incremementTicker(){
-		this.ticker++;
+	public void incremementTimer(){
+		this.timer++;
 	}
 	
 	//Returns readyQueue
@@ -77,6 +77,16 @@ public class Scheduler {
     	queue.resetQueues();
     }
    
+    public boolean checkQuantumStatus(){
+    	if (timer==quantum){
+    		reurn true;
+    	}else
+    		return false;
+    }
     
-   
+    public void sendToBack(){
+    	Process temp = Scheduler.removeProcess();
+    	temp.setState(ProcessState.READY);
+    	Scheduler.insertProcess(temp);
+    }
 }

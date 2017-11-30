@@ -19,10 +19,11 @@ public class ProcessQueue {
 			 enqueueWaitingProcess(p);
 	 }
 	 
-	 public void dequeueReadyProcess(){
+	 public Process dequeueReadyProcess(){
 		 Process temp;
 		 temp = this.readyQueue.remove(0);
 		 this.freeMemory+=this.freeMemory+temp.getMemory(); 
+		 return temp;
 	 }
 	 
 	

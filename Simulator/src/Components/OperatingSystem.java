@@ -25,12 +25,18 @@ public class OperatingSystem {
 			cpu.setCurrentProcess(scheduler.getReadyQueue().get(0));
 		}
 		
+		if(!cpu.getCurrentProcess().equals(null)){
+			cpu.execute();
+		}
 		
+		scheduler.incrementTimer();
 		
-		
-
-	
-	    
-
-	    
+		//Checks if process quantum time in CPU has been reached, if so, send to back of Ready Queue
+		if(scheduler.checkQuantumStatus){
+			scheduler.sendToBack()
+		}
+		else{
+			return;
+		}
+		 
 }
