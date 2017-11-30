@@ -50,7 +50,7 @@ public class CommandLine {
 	        switch(command) {
 	        	case "load": load(file); break;
 	            case "proc": proc(); break;
-	           // case "mem": mem(); break;
+	            case "mem": mem(); break;
 	           // case "exe": exe(); break;
 	           // case "reset": reset(); break;
 	            //case "exit": exit(); break;
