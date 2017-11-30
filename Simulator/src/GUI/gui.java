@@ -2,7 +2,9 @@ package GUI;
 
 
 import javafx.application.Application;
+import javafx.animation.AnimationTimer;
 import Components.Scheduler;
+import Components.Simulator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,11 +41,12 @@ public class gui extends Application {
 	
     Button button;
     private BorderPane layout;
-    public TextField CommandInput;
+    public static TextField CommandInput;
     static protected TextArea textArea;
     private ArrayList<String>tokens = new ArrayList<>();
     public ArrayList<String> input;
     String temp;
+   
     
     // Creates a table of ready process
     TableView<Process> readyTable;
@@ -158,15 +161,22 @@ public class gui extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         
-        //startSim();
+        startSim();
     }
     
-   /* private void startSim() {
-    	while(true) {
-    		this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));		
-    	}
-    */
+    private void startSim() {
+    		this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
+    		this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
+    		
+    		
+    		 new AnimationTimer() {
+    	            @Override public void handle(long currentNanoTime) {
+    	            	
+    	            }
+    		
+    	};
+    }
     
-    
+
     
 }

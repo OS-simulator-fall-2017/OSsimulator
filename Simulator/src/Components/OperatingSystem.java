@@ -2,6 +2,8 @@ package Components;
 
 import java.io.File;
 import java.util.ArrayList;
+import GUI.gui;
+import ParseText.ParseText;
 import java.util.Scanner;
 
 public class OperatingSystem {
@@ -10,9 +12,10 @@ public class OperatingSystem {
 	private Scheduler scheduler=new Scheduler();
 	private CPU cpu = new CPU();
 	Scanner scan = new Scanner(System.in);
+	private String input = gui.CommandInput.getText();
 	
 	
-	public void run(){
+	/*public void run(){
 		
 		//Updates the queues first, this should put next process first in ready queue
 		scheduler.updateQueues();
@@ -25,6 +28,7 @@ public class OperatingSystem {
 		//Takes in input from console
 		if(scan.hasNextLine()){
 			CommandLine line = new CommandLine();
+			ParseText text = new ParseText();
 			line.parseLine(scan.nextLine());
 			
 			switch(line.chooseCommand()){
@@ -50,7 +54,7 @@ public class OperatingSystem {
 		
 		cpu.tickClock();
 		
-	}
+	}*/
 	
 	  public void proc(){
 	    	ArrayList<Process> ready = Scheduler.getReadyQueue();
@@ -77,7 +81,7 @@ public class OperatingSystem {
 	    }
 	    
 	    
-	    public void loadProgram(String program){
+	   /* public void loadProgram(String program){
 	    	CommandLine line = new CommandLine();
 	    	line.parseProgramFile(program);
 	    	int mem = Integer.parseInt(line.getQueue().remove(0));
@@ -100,7 +104,7 @@ public class OperatingSystem {
 	    	}
 	    	
 	    }
-	    
+	   */ 
 	    public void exe(int cycles){
 	    	Simulator.executeSolo=false;
 	    	Simulator.executionCycles=cycles;
@@ -108,6 +112,10 @@ public class OperatingSystem {
 	    public void exe(){
 	    	Simulator.executeSolo=true;
 	    	Simulator.executionCycles=0;
+	    }
+	    
+	    public void start(){
+	    	
 	    }
 	    
 	    
