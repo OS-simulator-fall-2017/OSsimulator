@@ -58,7 +58,7 @@ public class Process {
 		this.calcTime = t;
 	}
 	public void setIOFlag(int t){
-		this.IOFlag=t;
+		this.IOflag=t;
 	}
 	
 
@@ -105,7 +105,7 @@ public class Process {
 	public void incrementIORequests(){
 		this.ioRequestsPerformed++;
 	}
-	public void decremementtCalcTime(){
+	public void decrementCalcTime(){
 		this.calcTime--;
 	}
 	

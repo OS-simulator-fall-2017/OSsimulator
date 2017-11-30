@@ -168,6 +168,7 @@ public class gui extends Application {
     		this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
     		this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
     		
+  
     		
     		 new AnimationTimer() {
     	            @Override public void handle(long currentNanoTime) {
