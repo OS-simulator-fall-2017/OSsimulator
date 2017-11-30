@@ -127,7 +127,7 @@ public class gui extends Application {
         //Action dependent on user input
         button.setOnAction(e -> {
         	 boolean valid = true;
-             if(!CommandInput.getText().trim().equals(""))
+             if(!CommandInput.getText().trim().equals(null))
                  valid = CommandLine.storeInputs(CommandInput.getText());
              CommandInput.clear();
              if(!valid){

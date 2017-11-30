@@ -52,11 +52,7 @@ public class CommandLine {
 	            case "proc": proc(); break;
 	            case "mem": mem(); break;
 	           // case "exe": exe(); break;
-<<<<<<< HEAD
 	            case "reset": reset(); break;
-=======
-	           case "reset": reset(); break;
->>>>>>> 5bef4bd7c9047ad4338800120d590574607c455b
 	            //case "exit": exit(); break;
 	            default: break;
 	        } 
@@ -79,7 +75,7 @@ public class CommandLine {
   	    	ArrayList<Process> ready = Scheduler.getReadyQueue();
   	    	ArrayList <Process>wait = Scheduler.getWaitingQueue();
   	    	
-  	    	if(ready.getSize()==0 && wait.getSize()==0){
+  	    	if(ready.size()==0 && wait.size()==0){
   	    		GuiPrompt.println("No process are currently loaded onto system.");
   	    	}else
   	    	{
