@@ -68,6 +68,9 @@ public class Scheduler {
     public static int getFreeMemory(){
     	return queue.getFreeMemory();
     }
+    public static int getUsedMemory(){
+    	return queue.getUsedMemory();
+    }
     
     public static void resetScheduler(){
     	ticker=0;

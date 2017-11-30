@@ -50,7 +50,7 @@ public class CommandLine {
 	        switch(command) {
 	        	case "load": load(file); break;
 	            case "proc": proc(); break;
-	           // case "mem": mem(); break;
+	            case "mem": mem(); break;
 	           // case "exe": exe(); break;
 	           // case "reset": reset(); break;
 	            //case "exit": exit(); break;
@@ -74,7 +74,6 @@ public class CommandLine {
 	    
 	    public static void proc(){
   	    	ArrayList<Process> ready = Scheduler.getReadyQueue();
-  	    	System.out.println(ready.toString());
   	    	ArrayList <Process>wait = Scheduler.getWaitingQueue();
   	    	
   	    	for(int i=0;i<ready.size();i++){
@@ -86,13 +85,13 @@ public class CommandLine {
   	    	
   	    }
   	    
-	    public void mem(){
-  	    	int i = Scheduler.getFreeMemory();
+	    public static void mem(){
+  	    	int i = Scheduler.getUsedMemory();
   	    	System.out.println("Current memory usage: " + i);
   	    	
   	    }
   	    
-	    public void reset(){
+	    public static void reset(){
   	    	Clock.resetClock();
   	    	Scheduler.resetScheduler();
   	    }
