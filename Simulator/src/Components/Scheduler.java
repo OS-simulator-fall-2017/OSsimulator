@@ -24,7 +24,7 @@ public class Scheduler {
 	}
 	
 	//Removes process from top of readyQueue, can be used to pop to CPU
-	public Process removeProcess(){
+	public static Process removeProcess(){
 		return queue.dequeueReadyProcess();
 	}
 	
@@ -44,7 +44,7 @@ public class Scheduler {
 	
 	}
 	//Increments the quantum ticker 1
-	public void incremementTimer(){
+	public void incrementTimer(){
 		this.timer++;
 	}
 	public void resetTimer(){
@@ -82,13 +82,13 @@ public class Scheduler {
    
     public boolean checkQuantumStatus(){
     	if (timer==quantum){
-    		reurn true;
+    		return true;
     	}else
     		return false;
     }
     
     public void sendToBack(){
-    	Process temp = Scheduler.removeProcess();
+    	Process temp = this.removeProcess();
     	temp.setState(ProcessState.READY);
     	Scheduler.insertProcess(temp);
     }
