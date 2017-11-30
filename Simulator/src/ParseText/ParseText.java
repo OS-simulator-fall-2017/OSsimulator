@@ -59,7 +59,6 @@ public class ParseText {
             }
        
         scan.close();
-       // LoadingProgram l = new LoadingProgram(tokens,time);
 	}
 	
 	//Breaks down the command entered and file (if presented) 
@@ -86,5 +85,10 @@ public class ParseText {
 	    public String getFile() {
 	        return this.file;
 	    }
+	    
+	    
+	    
+	    
+	
 	  
 }

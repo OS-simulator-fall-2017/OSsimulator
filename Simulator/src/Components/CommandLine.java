@@ -31,12 +31,6 @@ public class CommandLine {
 	    }
 
 	    
-	    public static void mem(){
-	    	int i = Scheduler.getFreeMemory();
-	    	System.out.println("Current memory usage: " + i);
-	    	
-	    }
-	    
 	    public static boolean Commands(String command) {
 	    	switch(userInput.getCommand()) {
 	    	case "proc": return true;
@@ -51,7 +45,6 @@ public class CommandLine {
 	    	}
 	    	
    		
-	    
 	    
 	    private static void chooseCommand(String command, String file) {
 	        switch(command) {
@@ -77,6 +70,51 @@ public class CommandLine {
 	        Process paint = Scheduler.getReadyQueue().remove(0);
 	        GuiPrompt.print(paint.getName() + "\n");
 	    }
+	    
+	    
+	    public void proc(){
+  	    	ArrayList<Process> ready = Scheduler.getReadyQueue();
+  	    	ArrayList <Process>wait = Scheduler.getWaitingQueue();
+  	    	
+  	    	for(int i=0;i<ready.size();i++){
+  	    		ready.get(i).printProcessInfo();
+  	    	}
+  	    	for(int k=0;k<wait.size();k++){
+  	    		wait.get(k).printProcessInfo();
+  	    	}
+  	    	
+  	    }
+  	    
+	    public void mem(){
+  	    	int i = Scheduler.getFreeMemory();
+  	    	System.out.println("Current memory usage: " + i);
+  	    	
+  	    }
+  	    
+	    public void reset(){
+  	    	Clock.resetClock();
+  	    	Scheduler.resetScheduler();
+  	    }
+  	    
+  	    
+	    public void loadProgram(String program){
+  	    	CommandLine line = new CommandLine();
+  	    	line.parseProgramFile(program);
+  	    	int mem = Integer.parseInt(line.getQueue().remove(0));
+  	    	Process p = new Process(program,mem,line.getQueue());
+  	    	scheduler.insertProcess(p);
+  	    }
+  	   
+  	    
+	    public void exe(int cycles){
+  	    	Simulator.executeSolo=false;
+  	    	Simulator.executionCycles=cycles;
+  	    }
+	    public void exe(){
+  	    	Simulator.executeSolo=true;
+  	    	Simulator.executionCycles=0;
+  	    }
+  	    
 	    
 	    
 	

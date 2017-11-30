@@ -47,9 +47,7 @@ public class OperatingSystem {
 			
 			}
 		}
-		
-		cpu.tickClock();
-		
+				
 	}
 	
 	  public void proc(){
