@@ -7,7 +7,7 @@ public class Scheduler {
 	private static ProcessQueue queue = new ProcessQueue();
 	
 	private final int quantum = 10;
-	private int ticker = 0;
+	private static int ticker = 0;
 	
 	  public static void insertPCB(Process process) {
 	        process.setArrivalTime(Clock.getClock());
@@ -69,8 +69,8 @@ public class Scheduler {
     	return queue.getFreeMemory();
     }
     
-    public void resetScheduler(){
-    	this.ticker=0;
+    public static void resetScheduler(){
+    	ticker=0;
     	queue.resetQueues();
     }
    

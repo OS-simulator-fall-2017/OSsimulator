@@ -31,12 +31,6 @@ public class CommandLine {
 	    }
 
 	    
-	    public static void mem(){
-	    	int i = Scheduler.getFreeMemory();
-	    	System.out.println("Current memory usage: " + i);
-	    	
-	    }
-	    
 	    public static boolean Commands(String command) {
 	    	switch(userInput.getCommand()) {
 	    	case "proc": return true;
@@ -52,11 +46,10 @@ public class CommandLine {
 	    	
    		
 	    
-	    
 	    private static void chooseCommand(String command, String file) {
 	        switch(command) {
-	        case "load": load(file); break;
-	            //case "proc": proc(); break;
+	        	case "load": load(file); break;
+	            case "proc": proc(); break;
 	           // case "mem": mem(); break;
 	           // case "exe": exe(); break;
 	           // case "reset": reset(); break;
@@ -74,9 +67,47 @@ public class CommandLine {
 	            Scheduler.insertPCB(new Process(file, size, requestFile.getQueue()));
 	        }
 	        GuiPrompt.print("Load Successful \n");
-	        Process paint = Scheduler.getReadyQueue().remove(0);
+	        Process paint = Scheduler.getReadyQueue().get(0);
 	        GuiPrompt.print(paint.getName() + "\n");
 	    }
+	    
+	    
+	    public static void proc(){
+  	    	ArrayList<Process> ready = Scheduler.getReadyQueue();
+  	    	System.out.println(ready.toString());
+  	    	ArrayList <Process>wait = Scheduler.getWaitingQueue();
+  	    	
+  	    	for(int i=0;i<ready.size();i++){
+  	    		ready.get(i).printProcessInfo();
+  	    	}
+  	    	for(int k=0;k<wait.size();k++){
+  	    		wait.get(k).printProcessInfo();
+  	    	}
+  	    	
+  	    }
+  	    
+	    public void mem(){
+  	    	int i = Scheduler.getFreeMemory();
+  	    	System.out.println("Current memory usage: " + i);
+  	    	
+  	    }
+  	    
+	    public void reset(){
+  	    	Clock.resetClock();
+  	    	Scheduler.resetScheduler();
+  	    }
+  	    
+  	   
+  	    
+	    public void exe(int cycles){
+  	    	Simulator.executeSolo=false;
+  	    	Simulator.executionCycles=cycles;
+  	    }
+	    public void exe(){
+  	    	Simulator.executeSolo=true;
+  	    	Simulator.executionCycles=0;
+  	    }
+  	    
 	    
 	    
 	

@@ -25,6 +25,7 @@ public class OperatingSystem {
 			cpu.setCurrentProcess(scheduler.getReadyQueue().get(0));
 		}
 		
+<<<<<<< HEAD
 		//Takes in input from console
 		if(scan.hasNextLine()){
 			CommandLine line = new CommandLine();
@@ -118,5 +119,6 @@ public class OperatingSystem {
 	    	
 	    }
 	    
+
 	    
 }
