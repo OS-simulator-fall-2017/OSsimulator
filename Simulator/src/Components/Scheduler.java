@@ -40,12 +40,15 @@ public class Scheduler {
 	
 	//Returns the quantum ticker
 	public int getTimer(){
-		return timerr;
+		return this.timer;
 	
 	}
 	//Increments the quantum ticker 1
 	public void incremementTimer(){
 		this.timer++;
+	}
+	public void resetTimer(){
+		this.timer=0;
 	}
 	
 	//Returns readyQueue
@@ -73,7 +76,7 @@ public class Scheduler {
     }
     
     public static void resetScheduler(){
-    	ticker=0;
+    	timer=0;
     	queue.resetQueues();
     }
    
