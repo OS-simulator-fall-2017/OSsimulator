@@ -56,7 +56,7 @@ public class CommandLine {
 	            		exe(Integer.parseInt(file))
 	            	}else
 	            	exe(); break;
-	           case "reset": reset(); break;
+	            case "reset": reset(); break;
 	            //case "exit": exit(); break;
 	            default: break;
 	        } 
@@ -102,6 +102,7 @@ public class CommandLine {
 	    public static void reset(){
   	    	Clock.resetClock();
   	    	Scheduler.resetScheduler();
+  	    	GuiPrompt.clear();
   	    }
   	    
   	   

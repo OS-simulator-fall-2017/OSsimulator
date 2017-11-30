@@ -15,6 +15,10 @@ public class GuiPrompt extends gui {
         textArea.appendText(string);
         output.add(string);
     }
+    
+    public static void clear() {
+    	textArea.clear();
+    }
 	
 
 }
