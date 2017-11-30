@@ -44,6 +44,9 @@ public class ProcessQueue {
 	 public int getFreeMemory(){
 		 return this.freeMemory;
 	 }
+	 public int getUsedMemory(){
+		 return 4096-this.freeMemory;
+	 }
 	 
 	 //Pops process from front of array list, sends it to the back
 	 public void preemptedProcess(Process p){
