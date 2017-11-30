@@ -13,6 +13,7 @@ public class Process {
 	private int processID;
 	private int processPriority;
 	private int timeSpent=0;
+	private int timeLeftToComplete=0;
 	private int ioRequestsPerformed=0;
 	private int arrivalTime;
 	private int IOflag;
@@ -26,6 +27,11 @@ public class Process {
 		this.processMemory = mem;
 		this.processCommands.equals(operationString);
 		this.processState = ProcessState.NEW;
+		for (int i=0;i<operationString.size();i++){
+			if(operationString.get(i).equals("CALCULATE")){
+				this.timeLeftToComplete+=Integer.parseInt(operationString.get(i+1));
+			}
+		}
 	}
 	
 
@@ -60,8 +66,8 @@ public class Process {
 	public String getState(){
 		return this.processState.toString();
 	}
-	public int getTimeLeft(){ //This will be time of all previous processes + time of process in question
-		return this.processTime-this.timeSpent;
+	public int getTimeLeft(){ 
+		return this.timeLeftToComplete;
 	}
 	public int getMemory(){
 		return this.processMemory;
@@ -115,7 +121,7 @@ public class Process {
 	public void printProcessInfo(){
 		GuiPrompt.println("PROCESS NAME: " + processName);
 		GuiPrompt.println("PROCESS STATE: " + processState);
-		GuiPrompt.println("TIME LEFT FOR THIS PROCESS: " + this.getTimeLeft());
+		GuiPrompt.println("CPU TIME LEFT FOR PROCESS COMPLETION: " + this.timeLeftToComplete);
 		GuiPrompt.println("______________________________________");
 	}
 	
