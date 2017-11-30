@@ -1,4 +1,5 @@
 package Components;
+import GUI.GuiPrompt;
 import java.util.ArrayList;
 
 public class Process {
@@ -65,8 +66,8 @@ public class Process {
 	public int getMemory(){
 		return this.processMemory;
 	}
-	public int getProcessID(){
-		return this.processID;
+	public String getName(){
+		return this.processName;
 	}
 	public int getRequestsPerformed(){//returns # of IO requests performed
 		return this.ioRequestsPerformed;
@@ -112,10 +113,10 @@ public class Process {
 	}
 	
 	public void printProcessInfo(){
-		System.out.println("PROCESS NAME: " + processName);
-		System.out.println("PROCESS STATE: " + processState);
-		System.out.println("TIME LEFT FOR THIS PROCESS: " + this.getTimeLeft());
-		System.out.println("______________________________________");
+		GuiPrompt.println("PROCESS NAME: " + processName);
+		GuiPrompt.println("PROCESS STATE: " + processState);
+		GuiPrompt.println("TIME LEFT FOR THIS PROCESS: " + this.getTimeLeft());
+		GuiPrompt.println("______________________________________");
 	}
 	
 	

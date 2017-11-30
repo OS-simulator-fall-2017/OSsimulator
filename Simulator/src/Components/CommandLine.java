@@ -1,82 +1,34 @@
 package Components;
 import java.awt.TextField;
+import Components.Process;
 import GUI.GuiPrompt;
+import ParseText.ParseText;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Scanner;
+import javafx.scene.control.*;
+import ParseText.ParseText;
 
 
 public class CommandLine {
-
-	private String inputFile;
-	private String command;
-	private String value;
-	private ArrayList<String>tokens = new ArrayList<>();
-	private Scanner scan;
-	
-	
-	
+		
 	//Takes job file and stores each token in our array list 
-	public void parseJobFile(String jobFile){
-		this.tokens.clear();
-		File file = new File(jobFile);
-        try {
-			scan = new Scanner(file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-            
-        while (scan.hasNext()) {
-                tokens.add(scan.next());
-            }
-       
-        scan.close();
-	}
-	
-	public void parseProgramFile(String programFile){
-		this.tokens.clear();
-		File file = new File(programFile);
-        try {
-			scan = new Scanner(file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-            
-        while (scan.hasNext()) {
-                this.tokens.add(scan.next());
-            }
-       
-        scan.close();
-       // LoadingProgram l = new LoadingProgram(tokens,time);
-	}
-	
-	//Takes 'String command' as input (ie each line of job file)
-	 public void parseLine(String command) {
-	        command = command.toUpperCase();
-	        scan = new Scanner(command);
-	        this.command = scan.next();
-	        value = null;
-	        if (scan.hasNext())
-	            value = scan.next();
-	        scan.close();
-	    }
-	 
-	 
-	//Getter methods for the few fields of this class
-	 public ArrayList<String> getQueue() {
-	        return this.tokens;
-	    }
+	 private static final ParseText userInput = new ParseText();
+	 private static final ParseText requestFile = new ParseText();
 
-	    public String getCommand() {
-	        return this.command;
+	//Function for determining next action based on input
+	  public static boolean storeInputs(String input) {
+	        userInput.parseLine(input);
+	        boolean valid = Commands(userInput.getCommand());
+	        if (valid) {
+	            if (!(userInput.getCommand() == null)) {
+	                chooseCommand(userInput.getCommand(), userInput.getFile());
+	            }
+	        }
+	        return valid;
 	    }
-
-	    public String getValue() {
-	        return this.value;
-	    }
-	  
 
 	    
 	    public static void mem(){
@@ -85,44 +37,46 @@ public class CommandLine {
 	    	
 	    }
 	    
-	    public static boolean Commands(javafx.scene.control.TextField commandInput) {
-   		 if(commandInput.getText().equals("proc")){
-   			 GuiPrompt.println("Testing");
-   	         return true;
-   		 }
-   		 if(commandInput.getText().equals("mem"))
-   			 return true;
-   		 if(commandInput.getText().equals("load"))
-   			 return true;    
-   		 if(commandInput.getText().equals("exe"))
-   			 return true;
-   		 if(commandInput.getText().equals("reset"))
-   			 return true;
-   		 if(commandInput.getText().equals("exit"))
-   			 return true;
-   	System.out.println("Error: not a proper command");
-   	return false;
-   }
+	    public static boolean Commands(String command) {
+	    	switch(userInput.getCommand()) {
+	    	case "proc": return true;
+	    	case "mem": return true;
+	    	case "exe": return true;
+	    	case "reset": return true;
+	    	case "exit": return true;
+	    	case "clear": return true;
+	    	case "load": return true;
+	    	}
+	    	return false;
+	    	}
+	    	
+   		
 	    
 	    
+	    private static void chooseCommand(String command, String file) {
+	        switch(command) {
+	        case "load": load(file); break;
+	            //case "proc": proc(); break;
+	           // case "mem": mem(); break;
+	           // case "exe": exe(); break;
+	           // case "reset": reset(); break;
+	            //case "exit": exit(); break;
+	         //   case "clear": clear(); break;
+	            default: break;
+	        } 
+	    }
 	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-=======
-	 
->>>>>>> 23badcbcb8520dd75290baa4f7517b6193866ada
-	    
-	    
-	    
-	    
-	    
+	    //Starts parsing through the actual file defined by user input(Function-Stores input)
+	    private static void load(String file) {
+	        requestFile.parseFile(file);
+	        if(!requestFile.getQueue().isEmpty()) {
+	            int size = Integer.valueOf(requestFile.getQueue().remove(0));
+	            Scheduler.insertPCB(new Process(file, size, requestFile.getQueue()));
+	        }
+	        GuiPrompt.print("Load Successful \n");
+	        Process paint = Scheduler.getReadyQueue().remove(0);
+	        GuiPrompt.print(paint.getName() + "\n");
+	    }
 	    
 	    
 	

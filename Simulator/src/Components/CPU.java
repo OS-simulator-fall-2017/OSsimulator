@@ -2,9 +2,11 @@ package Components;
 
 import java.util.ArrayList;
 import java.util.Random;
+import GUI.gui;
 
 public class CPU {
 
+	private String text;
 	private Process currentProcess;
 	Random rand = new Random();
 	
@@ -43,7 +45,8 @@ public class CPU {
 			currentProcess.printProcessInfo();
 		}
 		
-			
+
+		
 	}
 	
 	

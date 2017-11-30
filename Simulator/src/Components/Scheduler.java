@@ -9,6 +9,11 @@ public class Scheduler {
 	private final int quantum = 10;
 	private int ticker = 0;
 	
+	  public static void insertPCB(Process process) {
+	        process.setArrivalTime(Clock.getClock());
+	        queue.enqueueReadyProcess(process);
+	    }
+	
 	//Inserts process to either ready queue or waiting queue, wherever it can 'fit'
 	public static void insertProcess(Process p){
 		if(queue.getFreeMemory()>p.getMemory()){
@@ -69,8 +74,6 @@ public class Scheduler {
     	queue.resetQueues();
     }
    
-    
-    
     
    
 }

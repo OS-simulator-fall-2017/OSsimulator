@@ -11,12 +11,12 @@ public class ProcessQueue {
 	 
 	 //Adds a process to the ready queue if there is enough space, if there isn't enough space its added to the waiting queue
 	 public void enqueueReadyProcess(Process p){
-		 if(p.getMemory()<this.freeMemory){
+		 //if(p.getMemory()<this.freeMemory){
 		 this.readyQueue.add(p);
-		 p.setState(ProcessState.READY);
-		 this.freeMemory = this.freeMemory - p.getMemory();
-		 }else
-			 enqueueWaitingProcess(p);
+		 //p.setState(ProcessState.READY);
+		 //this.freeMemory = this.freeMemory - p.getMemory();
+		 //}else
+			// enqueueWaitingProcess(p);
 	 }
 	 public void dequeueReadyProcess(){
 		 Process temp;

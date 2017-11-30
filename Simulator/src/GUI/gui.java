@@ -2,6 +2,7 @@ package GUI;
 
 
 import javafx.application.Application;
+import Components.Scheduler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,10 +21,16 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 import javax.swing.JTable;
+
+import Components.CommandLine;
 import Components.CommandLine;
 import Components.Process;
-
+import ParseText.ParseText;
 public class gui extends Application {
 
 	
@@ -32,15 +39,22 @@ public class gui extends Application {
 	
     Button button;
     private BorderPane layout;
-    private TextField CommandInput;
+    public TextField CommandInput;
     static protected TextArea textArea;
+    private ArrayList<String>tokens = new ArrayList<>();
+    public ArrayList<String> input;
+    String temp;
     
     // Creates a table of ready process
-    TableView<testTable> readyTable;
-    TableView<testTable> waitingTable;
+    TableView<Process> readyTable;
+    TableView<Process> waitingTable;
    
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public TextField getInput(String Input){
+    	return this.CommandInput;
     }
     
     @Override
@@ -50,49 +64,49 @@ public class gui extends Application {
     	        
     	        
       //Ready Columns
-        TableColumn<testTable, String> nameColumn = new TableColumn<>("Program");
+        TableColumn<Process, String> nameColumn = new TableColumn<>("Process");
         //nameColumn.setMinWidth(150);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("processName"));
         
-        TableColumn<testTable, String> memColumn = new TableColumn<>("Memory Size");
+        TableColumn<Process, String> memColumn = new TableColumn<>("Memory Size");
        // memColumn.setMinWidth(75);
-        memColumn.setCellValueFactory(new PropertyValueFactory<>("run"));
+        memColumn.setCellValueFactory(new PropertyValueFactory<>("processMemory"));
         
-        TableColumn<testTable, Double> arrivalColumn = new TableColumn<>("Arrival Time");
+        TableColumn<Process, Double> arrivalColumn = new TableColumn<>("Arrival Time");
        // arrivalColumn.setMinWidth(75);
-        arrivalColumn.setCellValueFactory(new PropertyValueFactory<>("arrival"));
+        arrivalColumn.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         
-        TableColumn<testTable, String> runColumn = new TableColumn<>("Run Time");
+        TableColumn<Process, String> runColumn = new TableColumn<>("Run Time");
         runColumn.setMinWidth(75);
-        runColumn.setCellValueFactory(new PropertyValueFactory<>("run"));
+        runColumn.setCellValueFactory(new PropertyValueFactory<>("calcTime"));
         
         
         //Waiting Columns
-        TableColumn<testTable, String> name2Column = new TableColumn<>("Program");
+        TableColumn<Process, String> name2Column = new TableColumn<>("Program");
         nameColumn.setMinWidth(150);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("processName"));
         
-        TableColumn<testTable, String> mem2Column = new TableColumn<>("Memory Size");
+        TableColumn<Process, String> mem2Column = new TableColumn<>("Memory Size");
         mem2Column.setMinWidth(75);
-        mem2Column.setCellValueFactory(new PropertyValueFactory<>("run"));
+        mem2Column.setCellValueFactory(new PropertyValueFactory<>("processMemory"));
         
-        TableColumn<testTable, Double> arrival2Column = new TableColumn<>("Arrival Time");
+        TableColumn<Process, Double> arrival2Column = new TableColumn<>("Arrival Time");
         arrivalColumn.setMinWidth(75);
-        arrivalColumn.setCellValueFactory(new PropertyValueFactory<>("arrival"));
+        arrivalColumn.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         
-        TableColumn<testTable, String> run2Column = new TableColumn<>("Run Time");
+        TableColumn<Process, String> run2Column = new TableColumn<>("Run Time");
         runColumn.setMinWidth(75);
-        runColumn.setCellValueFactory(new PropertyValueFactory<>("run"));
+        runColumn.setCellValueFactory(new PropertyValueFactory<>("calcTime"));
         
         
         
         readyTable = new TableView<>();
-        ObservableList<Process> processList = FXCollections.observableArrayList();
-        readyTable.setItems(getTestTable());
+        this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
+        readyTable.setItems(readyProcessList);
         readyTable.getColumns().addAll(nameColumn, memColumn, arrivalColumn, runColumn);
         
         waitingTable = new TableView<>();
-        waitingTable.setItems(getTestTable());
+        waitingTable.setItems(waitingProcessList);
         waitingTable.getColumns().addAll(nameColumn, memColumn, arrivalColumn, runColumn);
         
         
@@ -103,10 +117,21 @@ public class gui extends Application {
         textArea.setPrefColumnCount(50);
         textArea.autosize();
         
-        CommandInput = new TextField();
-        button = new Button();
+        this.CommandInput = new TextField();
+        this.button = new Button();
         button.setText("Submit");
-        button.setOnAction(e -> CommandLine.Commands(CommandInput) );
+        
+        //Action dependent on user input
+        button.setOnAction(e -> {
+        	 boolean valid = true;
+             if(!CommandInput.getText().trim().equals(""))
+                 valid = CommandLine.storeInputs(CommandInput.getText());
+             CommandInput.clear();
+             if(!valid){
+            	 GuiPrompt.println("Invalid Command!");
+             }
+        }
+        		);
         
         HBox Input = new HBox();
         Input.getChildren().addAll(CommandInput, button);
@@ -138,16 +163,14 @@ public class gui extends Application {
         Scene scene = new Scene(layout, 1000, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        startSim();
     }
     
-    public ObservableList<testTable> getTestTable(){
-        ObservableList<testTable> jobs = FXCollections.observableArrayList();
-       jobs.add(new testTable("text", 859.00, 20));
-        jobs.add(new testTable("test", 2.49, 198));
-        jobs.add(new testTable("idk", 99.00, 74));
-        jobs.add(new testTable("paintballs", 19.99, 12));
-        jobs.add(new testTable("Wrecked", 1.49, 856));
-        return jobs;
+    private void startSim() {
+    	while(true) {
+    		this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));		
+    	}
     }
     
     
