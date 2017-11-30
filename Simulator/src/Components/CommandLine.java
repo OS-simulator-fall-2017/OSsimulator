@@ -48,8 +48,8 @@ public class CommandLine {
 	    
 	    private static void chooseCommand(String command, String file) {
 	        switch(command) {
-	        case "load": load(file); break;
-	            //case "proc": proc(); break;
+	        	case "load": load(file); break;
+	            case "proc": proc(); break;
 	           // case "mem": mem(); break;
 	           // case "exe": exe(); break;
 	           // case "reset": reset(); break;
@@ -67,13 +67,14 @@ public class CommandLine {
 	            Scheduler.insertPCB(new Process(file, size, requestFile.getQueue()));
 	        }
 	        GuiPrompt.print("Load Successful \n");
-	        Process paint = Scheduler.getReadyQueue().remove(0);
+	        Process paint = Scheduler.getReadyQueue().get(0);
 	        GuiPrompt.print(paint.getName() + "\n");
 	    }
 	    
 	    
-	    public void proc(){
+	    public static void proc(){
   	    	ArrayList<Process> ready = Scheduler.getReadyQueue();
+  	    	System.out.println(ready.toString());
   	    	ArrayList <Process>wait = Scheduler.getWaitingQueue();
   	    	
   	    	for(int i=0;i<ready.size();i++){
@@ -96,14 +97,6 @@ public class CommandLine {
   	    	Scheduler.resetScheduler();
   	    }
   	    
-  	    
-	    public void loadProgram(String program){
-  	    	CommandLine line = new CommandLine();
-  	    	line.parseProgramFile(program);
-  	    	int mem = Integer.parseInt(line.getQueue().remove(0));
-  	    	Process p = new Process(program,mem,line.getQueue());
-  	    	scheduler.insertProcess(p);
-  	    }
   	   
   	    
 	    public void exe(int cycles){
