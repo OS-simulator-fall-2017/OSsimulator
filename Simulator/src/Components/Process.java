@@ -128,10 +128,10 @@ public class Process {
 		GuiPrompt.println("______________________________________");
 	}
 	
-	public void exit(){
+	/*public void exit(){
 		this.processState = ProcessState.EXIT;
 		Scheduler
-	}
+	}*/
 	
 	
 }

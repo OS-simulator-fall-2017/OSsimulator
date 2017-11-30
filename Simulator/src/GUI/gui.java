@@ -2,6 +2,7 @@ package GUI;
 
 
 import javafx.application.Application;
+import Components.OperatingSystem;
 import javafx.animation.AnimationTimer;
 import Components.Scheduler;
 import Components.Simulator;
@@ -23,12 +24,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
 import javax.swing.JTable;
-
 import Components.CommandLine;
 import Components.CommandLine;
 import Components.Process;
@@ -39,6 +37,7 @@ public class gui extends Application {
 	 private final ObservableList<Process> readyProcessList = FXCollections.observableArrayList();
 	 private final ObservableList<Process> waitingProcessList = FXCollections.observableArrayList();
 	
+	OperatingSystem os = new OperatingSystem();
     Button button;
     private BorderPane layout;
     public static TextField CommandInput;
@@ -164,20 +163,42 @@ public class gui extends Application {
         startSim();
     }
     
-    private void startSim() {
-    		this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
-    		this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
-    		
-  
-    		
-    		 new AnimationTimer() {
-    	            @Override public void handle(long currentNanoTime) {
-    	            	
-    	            }
-    		
-    	};
-    }
-    
+    public void startSim() throws InterruptedException {
+    	this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
+        this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
 
+        final long[] prevTime = {0};
+        
+        loop();
+
+       new AnimationTimer() {
+            @Override public void handle(long currentNanoTime) {
+                if (currentNanoTime > prevTime[0] + 900000000) {
+                    try {
+                        loop();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    prevTime[0] = currentNanoTime + 900000000;
+                }
+            }
+        }.start();
+    }
+
+    public void loop() throws InterruptedException {
+        // Render GUI
+        this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
+        this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
+
+        // Run Simulator
+        if (!Simulator.executeSolo && Simulator.executionCycles == 0) {
+            return;
+        } else {
+            Simulator.executionCycles--;
+        }
+
+        os.run();
+    }
     
 }

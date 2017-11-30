@@ -52,8 +52,8 @@ public class CommandLine {
 	            case "proc": proc(); break;
 	            case "mem": mem(); break;
 	            case "exe": 
-	            	if(file){
-	            		exe(Integer.parseInt(file))
+	            	if(!file.equals(null)){
+	            		exe(Integer.parseInt(file));
 	            	}else
 	            	exe(); break;
 	            case "reset": reset(); break;
@@ -107,11 +107,11 @@ public class CommandLine {
   	    
   	   
   	    
-	    public void exe(int cycles){
+	    public static void exe(int cycles){
   	    	Simulator.executeSolo=false;
   	    	Simulator.executionCycles=cycles;
   	    }
-	    public void exe(){
+	    public static void exe(){
   	    	Simulator.executeSolo=true;
   	    	Simulator.executionCycles=0;
   	    }

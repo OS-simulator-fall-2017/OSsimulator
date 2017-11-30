@@ -47,7 +47,7 @@ public class CPU {
 				currentProcess.printProcessInfo();
 			case (""):
 				currentProcess.setState(ProcessState.EXIT);
-				Scheduler.removeProcess(currentProcess);
+				Scheduler.removeProcess();
 			}
 		}
 		else{

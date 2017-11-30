@@ -12,7 +12,7 @@ public class OperatingSystem {
 	private Scheduler scheduler=new Scheduler();
 	private CPU cpu = new CPU();
 	Scanner scan = new Scanner(System.in);
-	private String input = gui.CommandInput.getText();
+	//private String input = gui.CommandInput.getText();
 	
 	
 	public void run(){
@@ -21,7 +21,7 @@ public class OperatingSystem {
 		scheduler.updateQueues();
 		
 		//If CPU empty and ready queue has process ready, send process to CPU
-		if(cpu.getCurrentProcess().equals(null)&&scheduler.getReadyQueue()!=null){
+		if(cpu.getCurrentProcess().equals(null)&&!scheduler.getReadyQueue().equals(null)){
 			cpu.setCurrentProcess(scheduler.getReadyQueue().get(0));
 		}
 		
@@ -32,11 +32,12 @@ public class OperatingSystem {
 		scheduler.incrementTimer();
 		
 		//Checks if process quantum time in CPU has been reached, if so, send to back of Ready Queue
-		if(scheduler.checkQuantumStatus){
-			scheduler.sendToBack()
+		if(scheduler.checkQuantumStatus()){
+			scheduler.sendToBack();
 		}
 		else{
 			return;
 		}
 		 
+}
 }
