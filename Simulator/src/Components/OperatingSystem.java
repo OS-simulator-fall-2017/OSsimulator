@@ -22,9 +22,8 @@ public class OperatingSystem {
 	public void run(){
 		
 		Clock.tickClock();
-		if(gen.nextInt(1)+999999999 == mark) {
-			RandomJob.jobGenerator();
-		}
+		
+		
 			
 		
 		//Updates the queues first, this should put next process first in ready queue

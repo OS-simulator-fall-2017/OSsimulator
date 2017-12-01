@@ -14,10 +14,10 @@ public class Scheduler {
 	
 	//Inserts process to either ready queue or waiting queue, wherever it can 'fit'
 	public static void insertProcess(Process p){
-		//if(queue.getFreeMemory()>p.getProcessMemory()){
-		//	queue.enqueueReadyProcess(p);
-		///}
-		//else
+		if(queue.getFreeMemory()>p.getProcessMemory()){
+			queue.enqueueReadyProcess(p);
+		}
+		else
 			queue.enqueueWaitingProcess(p);
 	}
 	
