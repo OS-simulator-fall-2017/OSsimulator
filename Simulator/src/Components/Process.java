@@ -2,7 +2,7 @@ package Components;
 import GUI.GuiPrompt;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.Random;
 public class Process {
 
 	
@@ -18,7 +18,6 @@ public class Process {
 	private int ioRequestsPerformed=0;
 	private int arrivalTime;
 	private int ioFlag=0;
-
 	private ArrayList <String> processCommands = new ArrayList<>();
 	
 	

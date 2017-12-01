@@ -61,6 +61,21 @@ public class ParseText {
         scan.close();
 	}
 	
+	public void parseProgramFile(File f){
+		this.tokens.clear();
+        try {
+			scan = new Scanner(f);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+            
+        while (scan.hasNext()) {
+                this.tokens.add(scan.next());
+            }
+       
+        scan.close();
+	}
+	
 	//Breaks down the command entered and file (if presented) 
 	 public void parseLine(String command) {
 	        command = command.toLowerCase();

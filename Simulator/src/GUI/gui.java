@@ -8,9 +8,7 @@ import Components.Scheduler;
 import Components.Simulator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
+import java.io.File;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -20,17 +18,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import javax.swing.JTable;
-import Components.CommandLine;
 import Components.CommandLine;
 import Components.Process;
-import ParseText.ParseText;
+import ParseText.RandomJob;
 public class gui extends Application {
 
 	
@@ -42,7 +37,6 @@ public class gui extends Application {
     private BorderPane layout;
     public static TextField CommandInput;
     static protected TextArea textArea;
-    private ArrayList<String>tokens = new ArrayList<>();
     public ArrayList<String> input;
     String temp;
    
@@ -174,14 +168,14 @@ public class gui extends Application {
 
        new AnimationTimer() {
             @Override public void handle(long currentNanoTime) {
-                if (currentNanoTime > prevTime[0] + 70000000) {
+                if (currentNanoTime > prevTime[0] + 100000000) {
                     try {
                         loop();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
-                    prevTime[0] = currentNanoTime + 70000000;
+                    prevTime[0] = currentNanoTime + 100000000;
                 }
             }
         }.start();
@@ -189,6 +183,7 @@ public class gui extends Application {
 
     public void loop() throws InterruptedException {
         // Render GUI
+    	RandomJob.jobGenerator();
         this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
         this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
         

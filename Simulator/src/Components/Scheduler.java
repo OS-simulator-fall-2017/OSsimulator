@@ -1,5 +1,6 @@
 package Components;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Scheduler {
 
@@ -8,16 +9,18 @@ public class Scheduler {
 	
 	private final int quantum = 10;
 	private static int timer = 0;
-	
+	Random mim = new Random();
+	Random max = new Random();
 	
 	//Inserts process to either ready queue or waiting queue, wherever it can 'fit'
 	public static void insertProcess(Process p){
-		if(queue.getFreeMemory()>p.getProcessMemory()){
-			queue.enqueueReadyProcess(p);
-		}
-		else
+		//if(queue.getFreeMemory()>p.getProcessMemory()){
+		//	queue.enqueueReadyProcess(p);
+		///}
+		//else
 			queue.enqueueWaitingProcess(p);
 	}
+	
 	
 	//Removes process from top of readyQueue, can be used to pop to CPU
 	public static Process removeProcess(){

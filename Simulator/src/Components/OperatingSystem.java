@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import GUI.gui;
 import ParseText.ParseText;
 import java.util.Scanner;
+import java.util.Random;
+import ParseText.RandomJob;
+
 
 public class OperatingSystem {
 
-	
+	Random gen = new Random();
+	private final int mark = 5;
 	private Scheduler scheduler=new Scheduler();
 	private CPU cpu = new CPU();
 	Scanner scan = new Scanner(System.in);
@@ -18,6 +22,11 @@ public class OperatingSystem {
 	public void run(){
 		
 		Clock.tickClock();
+		if(gen.nextInt(1)+999999999 == mark) {
+			RandomJob.jobGenerator();
+		}
+			
+		
 		//Updates the queues first, this should put next process first in ready queue
 		scheduler.updateQueues();
 		

@@ -52,7 +52,7 @@ public class CommandLine {
 	            case "proc": proc(); break;
 	            case "mem": mem(); break;
 	            case "exe": 
-	            	if(!file.equals(null)){
+	            	if(file!=(null)){
 	            		exe(Integer.parseInt(file));
 	            	}else
 	            	exe(); break;
