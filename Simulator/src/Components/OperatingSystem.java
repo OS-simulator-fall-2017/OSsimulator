@@ -32,6 +32,7 @@ public class OperatingSystem {
 		}
 		
 		
+		
 		//Checks if process quantum time in CPU has been reached, if so, send to back of Ready Queue
 		if(scheduler.checkQuantumStatus()){
 			scheduler.sendToBack();
@@ -40,7 +41,6 @@ public class OperatingSystem {
 		else{
 			return;
 		}
-		
 		 
 }
 }

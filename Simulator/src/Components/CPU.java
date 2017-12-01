@@ -33,14 +33,13 @@ public class CPU {
 	
 	public void execute(){
 		currentProcess.incrementTime();
+		text = currentProcess.getNextCommand();
 		if(currentProcess.getCalcTime()==0){
-			String comm = currentProcess.getNextCommand();
-			System.out.println("COMMAND: " + comm);
-			switch (comm){
+			
+			switch (text){
 			case "CALCULATE":
 				currentProcess.setState(ProcessState.RUN);
 				currentProcess.setCalcTime(Integer.parseInt(currentProcess.getNextCommand()));
-				System.out.println("CALC TIME:" + currentProcess.getCalcTime());
 				break;
 			case "IO":
 				currentProcess.incrementIORequests();
@@ -54,14 +53,16 @@ public class CPU {
 				System.out.println("Currently running process:\n___________________________________");
 				currentProcess.printProcessInfo();
 				break;
-			default:break;
+			
 			}
 		}
 		else
 			currentProcess.decrementCalcTime();
 		
-		if(currentProcess.getCalcTime()==0&&currentProcess.getNextCommand()==null){
+		
+		if(text==null&&currentProcess.getCalcTime()==0){
 			currentProcess.setState(ProcessState.EXIT);
+			this.currentProcess=null;
 		}
 		
 

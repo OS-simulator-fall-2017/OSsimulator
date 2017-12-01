@@ -170,7 +170,7 @@ public class gui extends Application {
 
         final long[] prevTime = {0};
         
-        //loop();
+        loop();
 
        new AnimationTimer() {
             @Override public void handle(long currentNanoTime) {

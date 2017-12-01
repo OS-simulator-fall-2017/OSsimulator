@@ -67,8 +67,8 @@ public class Process {
 	public int getPriority(){
 		return this.processPriority;
 	}
-	public String getState(){
-		return this.processState.toString();
+	public ProcessState getState(){
+		return this.processState;
 	}
 	public int getTimeLeft(){ 
 		return this.timeLeftToComplete;
