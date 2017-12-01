@@ -43,14 +43,13 @@ public class CPU {
 				break;
 			case "IO":
 				currentProcess.incrementIORequests();
-				currentProcess.setState(ProcessState.WAIT);
 				currentProcess.setIOFlag(rand.nextInt(26)+25);
+				System.out.println(currentProcess.getIOWait());
 				break;
 			case "YIELD":
 				currentProcess.setState(ProcessState.READY);
 				break;
 			case "OUT":
-				System.out.println("Currently running process:\n___________________________________");
 				currentProcess.printProcessInfo();
 				break;
 			
@@ -62,6 +61,7 @@ public class CPU {
 		}
 		if(currentProcess.getProcessCommands().size()==0&&currentProcess.getCalcTime()==0){
 			currentProcess.setState(ProcessState.EXIT);
+			System.out.println("FINAL CYCLES TAKEN:" + currentProcess.getTimeSpent());
 			this.currentProcess=null;
 		}
 		

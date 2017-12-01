@@ -59,7 +59,8 @@ public class Process {
 		this.calcTime = t;
 	}
 	public void setIOFlag(int t){
-		this.IOflag=t;
+		this.IOflag = t + Clock.getClock();
+		this.setState(ProcessState.WAIT);
 	}
 	
 

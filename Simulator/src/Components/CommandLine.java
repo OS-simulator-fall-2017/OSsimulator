@@ -69,7 +69,6 @@ public class CommandLine {
 	            int size = Integer.valueOf(requestFile.getQueue().remove(0));
 	            //System.out.println(requestFile.getQueue().remove(0));
 	            Process temp = new Process(file,size,requestFile.getQueue());
-	            temp.printProcessInfo();
 	            Scheduler.insertProcess(temp);
 	           
 	        }

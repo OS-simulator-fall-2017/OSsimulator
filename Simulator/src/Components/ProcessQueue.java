@@ -72,6 +72,12 @@ public class ProcessQueue {
 	
 	public void updateQueues(){
 		for (int i=0;i<this.readyQueue.size();i++){
+			if (this.readyQueue.get(i).getState()==ProcessState.WAIT){
+				if(this.readyQueue.get(i).getIOWait()==true){
+					this.readyQueue.get(i).setState(ProcessState.READY);
+				}
+			}
+			
 			if(this.readyQueue.get(i).getState()==ProcessState.EXIT){
 				this.freeMemory+=this.readyQueue.get(i).getProcessMemory();
 				this.readyQueue.remove(i);
