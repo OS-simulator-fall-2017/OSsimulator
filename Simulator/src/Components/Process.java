@@ -22,8 +22,8 @@ public class Process {
 	
 	
 	//Initializes process with the name, memory size, and array list of operation strings within process
-	public Process(String name, int mem, ArrayList<String>operationString){
-		this.processName = name;
+	public Process(String processName, int mem, ArrayList<String>operationString){
+		this.processName = processName;
 		this.processMemory = mem;
 		this.processCommands.equals(operationString);
 		this.processState = ProcessState.NEW;
@@ -72,10 +72,10 @@ public class Process {
 	public int getTimeLeft(){ 
 		return this.timeLeftToComplete;
 	}
-	public int getMemory(){
+	public int getProcessMemory(){
 		return this.processMemory;
 	}
-	public String getName(){
+	public String getProcessName(){
 		return this.processName;
 	}
 	public int getRequestsPerformed(){//returns # of IO requests performed
