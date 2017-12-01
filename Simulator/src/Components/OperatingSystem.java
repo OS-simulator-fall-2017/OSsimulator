@@ -22,23 +22,24 @@ public class OperatingSystem {
 	public void run(){
 		
 		Clock.tickClock();
+		
+		
 		if(gen.nextInt(1)+999999999 == mark) {
 			RandomJob.jobGenerator();
 		}
-			
-		
-		//Updates the queues first, this should put next process first in ready queue
-		scheduler.updateQueues();
 		
 		
 		//If CPU empty and ready queue has process ready, send process to CPU.. else if the cpu has a process then execute
 		if(cpu.getCurrentProcess()==null&&Scheduler.getReadyQueue().size()>0){
 			cpu.setCurrentProcess(Scheduler.getNextProcess());
+			scheduler.resetTimer();
 			
 		}
 		
+		//Updates the queues first, this should put next process first in ready queue
+		scheduler.updateQueues();
+		
 		if(cpu.getCurrentProcess()!=null){
-			scheduler.incrementTimer();
 			cpu.execute();	
 		}
 		
@@ -47,7 +48,7 @@ public class OperatingSystem {
 			if(Scheduler.getReadyQueue().get(i).getIOFlag()!=0){
 				Scheduler.getReadyQueue().get(i).decrementIOFlag();
 			}
-			if(Scheduler.getReadyQueue().get(i).getIOFlag()==0&&Scheduler.getReadyQueue().get(i).getState()==ProcessState.WAIT){
+			else if(Scheduler.getReadyQueue().get(i).getIOFlag()==0&&Scheduler.getReadyQueue().get(i).getState()==ProcessState.WAIT){
 					Scheduler.getReadyQueue().get(i).setState(ProcessState.READY);
 				}
 		}
@@ -56,8 +57,10 @@ public class OperatingSystem {
 		//Checks if process quantum time in CPU has been reached, if so, send to back of Ready Queue
 		if(scheduler.checkQuantumStatus()){
 			cpu.getCurrentProcess().setState(ProcessState.READY);
-			Scheduler.sendToBack();
-			cpu.setCurrentProcess(Scheduler.getNextProcess());
+			Process temp = cpu.getCurrentProcess();
+			scheduler.removeProcess(temp);
+			scheduler.getReadyQueue().add(temp);
+			cpu.setCurrentProcess(null);
 		}
 		else{
 			return;

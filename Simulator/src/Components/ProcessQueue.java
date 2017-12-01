@@ -71,32 +71,25 @@ public class ProcessQueue {
 	
 	
 	public void updateQueues(){
-		/*
-		for (int i=0;i<this.readyQueue.size();i++){
-			if (this.readyQueue.get(i).getIOFlag()!=0){
-				this.readyQueue.get(i).decrementIOFlag();
-			}
-			if(this.readyQueue.get(i).getIOFlag()==0&&this.readyQueue.get(i).getState()==ProcessState.WAIT){
-					this.readyQueue.get(i).setState(ProcessState.READY);
-				}
-			
-			*/
+
 		for (int i=0;i<this.readyQueue.size();i++){
 			if(this.readyQueue.get(i).getState()==ProcessState.EXIT){
 				this.freeMemory+=this.readyQueue.get(i).getProcessMemory();
 				this.readyQueue.remove(i);
-			}
+		}
 		}
 			if(this.freeMemory>0 && this.waitingQueue.size()>0){
-			for(int i = 0;i<this.waitingQueue.size();i++){
-				if(this.waitingQueue.get(i).getProcessMemory()<this.freeMemory){
-					Process temp = this.waitingQueue.remove(i);
+			for(int k = 0;k<this.waitingQueue.size();k++){
+				if(this.waitingQueue.get(k).getProcessMemory()<this.freeMemory){
+					Process temp = this.waitingQueue.remove(k);
 					this.enqueueReadyProcess(temp);
 				}
+			
+			}
 			}
 		}
-	}
 	
+
 	public void resetQueues(){
 		this.readyQueue.clear();
 		this.waitingQueue.clear();

@@ -168,14 +168,14 @@ public class gui extends Application {
 
        new AnimationTimer() {
             @Override public void handle(long currentNanoTime) {
-                if (currentNanoTime > prevTime[0] + 100000000) {
+                if (currentNanoTime > prevTime[0] + 1000) {
                     try {
                         loop();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
-                    prevTime[0] = currentNanoTime + 100000000;
+                    prevTime[0] = currentNanoTime + 1000;
                 }
             }
         }.start();

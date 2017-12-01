@@ -12,16 +12,18 @@ public class CPU {
 	private Process currentProcess;
 	Random rand = new Random();
 	
-	
+
 	 public static int tickClock(){
 
 	        return Clock.tickClock();
 	    }
-	 
+
 	 
 	public void setCurrentProcess(Process p){
+		if(p!=null){
 		currentProcess = p;
 		this.currentProcess.setState(ProcessState.RUN);
+		}else currentProcess=null;
 	}
 	public Process getCurrentProcess(){
 		if(this.currentProcess != null)
@@ -31,27 +33,26 @@ public class CPU {
 	
 	
 	
-	public void execute(){
-	
+	public void execute() {
 		
 		if(currentProcess.getCalcTime()==0){
-			text = currentProcess.getNextCommand();
+			String text = currentProcess.getNextCommand();
+			if(text==null){
+				currentProcess.setState(ProcessState.EXIT);
+				currentProcess=null;
+			}
 			switch (text){
 			case "CALCULATE":
 				currentProcess.setState(ProcessState.RUN);
 				currentProcess.setCalcTime(Integer.parseInt(currentProcess.getNextCommand()));
 				break;
 			case "IO":
+				currentProcess.setState(ProcessState.WAIT);
 				currentProcess.incrementIORequests();
 				currentProcess.setIOFlag(rand.nextInt(26)+25);
-				System.out.println("FLAG:"+currentProcess.getIOFlag());
-				
-				Scheduler.resetTimer();
 				break;
 			case "YIELD":
-				currentProcess.setState(ProcessState.READY);
-				Scheduler.sendToBack();
-				currentProcess=null;
+				currentProcess.setState(ProcessState.WAIT);
 				break;
 			case "OUT":
 				currentProcess.printProcessInfo();
@@ -62,16 +63,26 @@ public class CPU {
 		else{
 			currentProcess.decrementCalcTime();
 			currentProcess.incrementTime();
+			Scheduler.incrementTimer();
 		}
+		
+		if(currentProcess.getProcessCommands().size()==0){
+			currentProcess.setState(ProcessState.EXIT);
+			this.currentProcess=null;
+		}
+		
+		/*
 		if(currentProcess.getProcessCommands().size()==0&&currentProcess.getCalcTime()==0){
 			currentProcess.setState(ProcessState.EXIT);
 			currentProcess=null;
 			Scheduler.resetTimer();
 			System.out.println("CLOCK:" + Clock.getClock());
 		}
+		*/
 		
 
 	}
+
 	
 	
 }
