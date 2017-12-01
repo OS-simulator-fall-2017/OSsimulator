@@ -24,17 +24,21 @@ public class OperatingSystem {
 		Clock.tickClock();
 		
 		
+
 		if(gen.nextInt(1)+999999999 == mark) {
 			RandomJob.jobGenerator();
 		}
-		
+
+			
 		
 		//If CPU empty and ready queue has process ready, send process to CPU.. else if the cpu has a process then execute
 		if(cpu.getCurrentProcess()==null&&Scheduler.getReadyQueue().size()>0){
 			cpu.setCurrentProcess(Scheduler.getNextProcess());
 			scheduler.resetTimer();
-			
+				
 		}
+		//Updates the queues first, this should put next process first in ready queue
+		scheduler.updateQueues();
 		
 		//Updates the queues first, this should put next process first in ready queue
 		scheduler.updateQueues();

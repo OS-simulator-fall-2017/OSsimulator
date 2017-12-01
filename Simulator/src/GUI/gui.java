@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.Collectors;
 import Components.CommandLine;
 import Components.Process;
@@ -39,7 +40,8 @@ public class gui extends Application {
     static protected TextArea textArea;
     public ArrayList<String> input;
     String temp;
-   
+    Random gen = new Random();
+	private final int mark = 20;
    
    
     public static void main(String[] args) {
@@ -183,10 +185,12 @@ public class gui extends Application {
 
     public void loop() throws InterruptedException {
         // Render GUI
-    	RandomJob.jobGenerator();
         this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
         this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
         
+        if(gen.nextInt(5) == 1) {
+			RandomJob.jobGenerator();
+		}
 
         // Run Simulator
         if (!Simulator.executeSolo && Simulator.executionCycles == 0) {

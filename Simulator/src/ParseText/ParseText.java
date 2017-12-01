@@ -2,6 +2,7 @@ package ParseText;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import GUI.GuiPrompt;
@@ -11,6 +12,7 @@ import Components.Scheduler;
 
 public class ParseText {
 	
+	private String orgInput;
 	private String inputFile;
     private String command, file;
     private ArrayList<String> tokens = new ArrayList<>();
@@ -40,7 +42,14 @@ public class ParseText {
 		}
 	}
 	
+	public String orgInput(){
+		return this.orgInput.substring(9,orgInput.length()-4);
+	}
+	
+	
+	
 	public void parseFile(String filename) {
+		
         this.inputFile = "programs/" + filename + ".txt";
         parseProgramFile();
     }
@@ -61,7 +70,7 @@ public class ParseText {
         scan.close();
 	}
 	
-	public void parseProgramFile(File f){
+	public void parseProgramFile(File f) throws IOException{
 		this.tokens.clear();
         try {
 			scan = new Scanner(f);
@@ -74,6 +83,7 @@ public class ParseText {
             }
        
         scan.close();
+        this.orgInput = f.getPath();
 	}
 	
 	//Breaks down the command entered and file (if presented) 
