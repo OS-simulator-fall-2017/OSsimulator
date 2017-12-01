@@ -14,6 +14,7 @@ public class ProcessQueue {
 		 if(p.getMemory()<this.freeMemory){
 		 this.readyQueue.add(p);
 		 p.setState(ProcessState.READY);
+		 p.setArrivalTime(Clock.getClock());
 		 this.freeMemory = this.freeMemory - p.getMemory();
 		 }else
 			 enqueueWaitingProcess(p);
@@ -30,6 +31,7 @@ public class ProcessQueue {
 	 public void enqueueWaitingProcess(Process p){
 		 this.waitingQueue.add(p);
 	 }
+	 
 	 public void dequeueWaiting(){
 		 this.waitingQueue.remove(0);
 	 }

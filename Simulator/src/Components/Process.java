@@ -90,11 +90,16 @@ public class Process {
 	public int getCalcTime(){
 		return this.calcTime;
 	}
+	public int getTimeSpent(){
+		return this.timeSpent;
+	}
 	public ArrayList<String> getProcessCommands(){
 		return this.processCommands;
 	}
 	public String getNextCommand(){
+		if(this.processCommands.size()>0)
 		return this.processCommands.remove(0);
+		return null;
 	}
 	
 	
@@ -125,7 +130,9 @@ public class Process {
 		GuiPrompt.println("PROCESS NAME: " + processName);
 		GuiPrompt.println("PROCESS STATE: " + processState);
 		GuiPrompt.println("CPU TIME LEFT FOR PROCESS COMPLETION: " + this.timeLeftToComplete);
+		GuiPrompt.println("Arrival Time: " + this.arrivalTime);
 		GuiPrompt.println("______________________________________");
+		
 	}
 	
 	/*public void exit(){

@@ -67,8 +67,10 @@ public class CommandLine {
 	        requestFile.parseFile(file);
 	        if(!requestFile.getQueue().isEmpty()) {
 	            int size = Integer.valueOf(requestFile.getQueue().remove(0));
-	            Scheduler.insertProcess(new Process(file, size, requestFile.getQueue()));
-	            
+	            //Scheduler.insertProcess(new Process(file, size, requestFile.getQueue()));
+	            Process temp = new Process(file,size,requestFile.getQueue());
+	            Scheduler.insertProcess(temp);
+	           
 	        }
 	        GuiPrompt.print("Load Successful \n");
 	    }

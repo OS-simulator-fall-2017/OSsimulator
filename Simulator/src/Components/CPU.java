@@ -22,15 +22,16 @@ public class CPU {
 		this.currentProcess.setState(ProcessState.RUN);
 	}
 	public Process getCurrentProcess(){
+		if(this.currentProcess != null)
 		return this.currentProcess;
+		else return null;
 	}
 	
 	
 	
 	public void execute(){
 		currentProcess.incrementTime();
-		
-		if(currentProcess.getCalcTime()==0){
+		if(currentProcess.getCalcTime()==0&&currentProcess.getNextCommand()!=null){
 			String comm = currentProcess.getNextCommand();
 			switch (comm){
 			case "CALCULATE":
@@ -52,6 +53,7 @@ public class CPU {
 		}
 		else{
 			currentProcess.decrementCalcTime();
+			
 		}
 
 	}

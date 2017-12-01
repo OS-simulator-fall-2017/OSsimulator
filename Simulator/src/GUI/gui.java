@@ -47,6 +47,7 @@ public class gui extends Application {
     private ArrayList<String>tokens = new ArrayList<>();
     public ArrayList<String> input;
     String temp;
+    private Stage window;
    
    
    
@@ -60,7 +61,9 @@ public class gui extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-    	        primaryStage.setTitle("OS 312");
+    	window = primaryStage;
+    	window.setTitle("OS 312");
+    	//primaryStage.setTitle("OS 312");
         
     	        
     	        
@@ -79,13 +82,13 @@ public class gui extends Application {
         
         TableColumn<Process, String> runColumn = new TableColumn<>("Run Time");
         runColumn.setMinWidth(75);
-        runColumn.setCellValueFactory(new PropertyValueFactory<>("calcTime"));
+        runColumn.setCellValueFactory(new PropertyValueFactory<>("timeSpent"));
         
         
         //Waiting Columns
         TableColumn<Process, String> name2Column = new TableColumn<>("Program");
        // nameColumn.setMinWidth(150);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("processName"));
+        name2Column.setCellValueFactory(new PropertyValueFactory<>("processName"));
         
         TableColumn<Process, String> mem2Column = new TableColumn<>("Memory Size");
         //mem2Column.setMinWidth(75);
@@ -93,22 +96,23 @@ public class gui extends Application {
         
         TableColumn<Process, Double> arrival2Column = new TableColumn<>("Arrival Time");
        // arrivalColumn.setMinWidth(75);
-        arrivalColumn.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
+        arrival2Column.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         
         TableColumn<Process, String> run2Column = new TableColumn<>("Run Time");
         //runColumn.setMinWidth(75);
-        runColumn.setCellValueFactory(new PropertyValueFactory<>("calcTime"));
+        run2Column.setCellValueFactory(new PropertyValueFactory<>("timeSpent"));
         
         
         
         readyTable = new TableView<>();
-        this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
+        readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
         readyTable.setItems(readyProcessList);
         readyTable.getColumns().addAll(nameColumn, memColumn, arrivalColumn, runColumn);
         
         waitingTable = new TableView<>();
+        waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
         waitingTable.setItems(waitingProcessList);
-        waitingTable.getColumns().addAll(nameColumn, memColumn, arrivalColumn, runColumn);
+        waitingTable.getColumns().addAll(name2Column, mem2Column, arrival2Column, run2Column);
         
         
         textArea = new TextArea();
@@ -156,15 +160,15 @@ public class gui extends Application {
         layout.setBottom(textArea);
        
         Scene scene = new Scene(layout, 1000, 600);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        window.setScene(scene);
+        window.show();
         
         startSim();
     }
     
     public void startSim() throws InterruptedException {
-    	this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
-        this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
+    	readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
+        waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
 
         final long[] prevTime = {0};
         
@@ -184,20 +188,25 @@ public class gui extends Application {
             }
         }.start();
     }
+    
+    
+
 
     public void loop() throws InterruptedException {
-        // Render GUI
-        this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
-        this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
+    	// Render GUI
+        readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
+        waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
 
+        
         // Run Simulator
         if (!Simulator.executeSolo && Simulator.executionCycles == 0) {
             return;
         } else {
             Simulator.executionCycles--;
         }
-
+        
         os.run();
+        System.out.println("GETS HERE");
     }
     
 }
