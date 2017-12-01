@@ -11,11 +11,12 @@ public class ProcessQueue {
 	 
 	 //Adds a process to the ready queue if there is enough space, if there isn't enough space its added to the waiting queue
 	 public void enqueueReadyProcess(Process p){
-		 if(p.getMemory()<this.freeMemory){
+		 if(p.getProcessMemory()<this.freeMemory){
 		 this.readyQueue.add(p);
 		 p.setState(ProcessState.READY);
 		 p.setArrivalTime(Clock.getClock());
-		 this.freeMemory = this.freeMemory - p.getMemory();
+		 this.freeMemory = this.freeMemory - p.getProcessMemory();
+
 		 }else
 			 enqueueWaitingProcess(p);
 	 }
@@ -23,7 +24,7 @@ public class ProcessQueue {
 	 public Process dequeueReadyProcess(){
 		 Process temp;
 		 temp = this.readyQueue.remove(0);
-		 this.freeMemory+=this.freeMemory+temp.getMemory(); 
+		 this.freeMemory+=this.freeMemory+temp.getProcessMemory(); 
 		 return temp;
 	 }
 	 
@@ -38,7 +39,7 @@ public class ProcessQueue {
 	 
 	 public void removeProcess(Process process) {
 	      readyQueue.remove(process);
-	      freeMemory+=process.getMemory();
+	      freeMemory+=process.getProcessMemory();
 	    }
 	 
 	 
@@ -71,16 +72,16 @@ public class ProcessQueue {
 	
 	public void updateQueues(){
 		for (int i=0;i<this.readyQueue.size();i++){
-			if(this.readyQueue.get(i).getState().equals(ProcessState.EXIT));{
-				this.freeMemory+=this.readyQueue.get(i).getMemory();
+			if(this.readyQueue.get(i).getState().equals(ProcessState.EXIT)){
+				this.freeMemory+=this.readyQueue.get(i).getProcessMemory();
 				this.readyQueue.remove(i);
 			}
 		}
 		if(this.freeMemory>0 && this.waitingQueue.size()>0){
 			for(int i = 0;i<this.waitingQueue.size();i++){
-				if(this.waitingQueue.get(i).getMemory()<this.freeMemory){
+				if(this.waitingQueue.get(i).getProcessMemory()<this.freeMemory){
 					this.readyQueue.add(this.waitingQueue.get(i));
-					this.freeMemory-=this.waitingQueue.get(i).getMemory();
+					this.freeMemory-=this.waitingQueue.get(i).getProcessMemory();
 				}
 			}
 		}

@@ -33,8 +33,6 @@ import Components.Process;
 import ParseText.ParseText;
 public class gui extends Application {
 
-	 private  TableView<Process> readyTable;
-	  private TableView<Process> waitingTable;
 	
 	 private final ObservableList<Process> readyProcessList = FXCollections.observableArrayList();
 	 private final ObservableList<Process> waitingProcessList = FXCollections.observableArrayList();
@@ -47,7 +45,6 @@ public class gui extends Application {
     private ArrayList<String>tokens = new ArrayList<>();
     public ArrayList<String> input;
     String temp;
-    private Stage window;
    
    
    
@@ -61,56 +58,55 @@ public class gui extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-    	window = primaryStage;
-    	window.setTitle("OS 312");
-    	//primaryStage.setTitle("OS 312");
+    	        primaryStage.setTitle("OS 312");
         
     	        
     	        
       //Ready Columns
-        TableColumn<Process, String> nameColumn = new TableColumn<>("Process");
+        TableColumn nameColumn = new TableColumn<Process, String>("Process");
         //nameColumn.setMinWidth(150);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("processName"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Process, String>("processName"));
         
-        TableColumn<Process, String> memColumn = new TableColumn<>("Memory Size");
+        TableColumn memColumn = new TableColumn<Process, String>("Memory Size");
        // memColumn.setMinWidth(75);
-        memColumn.setCellValueFactory(new PropertyValueFactory<>("processMemory"));
+        memColumn.setCellValueFactory(new PropertyValueFactory<Process, String>("processMemory"));
         
-        TableColumn<Process, Double> arrivalColumn = new TableColumn<>("Arrival Time");
+        TableColumn arrivalColumn = new TableColumn<Process, String>("Arrival Time");
        // arrivalColumn.setMinWidth(75);
         arrivalColumn.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         
-        TableColumn<Process, String> runColumn = new TableColumn<>("Run Time");
+        TableColumn runColumn = new TableColumn<Process, String>("Run Time");
         runColumn.setMinWidth(75);
-        runColumn.setCellValueFactory(new PropertyValueFactory<>("timeSpent"));
+        runColumn.setCellValueFactory(new PropertyValueFactory<Process, String>("timeSpent"));
         
         
         //Waiting Columns
-        TableColumn<Process, String> name2Column = new TableColumn<>("Program");
+        TableColumn name2Column = new TableColumn<>("Program");
        // nameColumn.setMinWidth(150);
-        name2Column.setCellValueFactory(new PropertyValueFactory<>("processName"));
+        name2Column.setCellValueFactory(new PropertyValueFactory<Process, String>("processName"));
         
-        TableColumn<Process, String> mem2Column = new TableColumn<>("Memory Size");
+        TableColumn mem2Column = new TableColumn<>("Memory Size");
         //mem2Column.setMinWidth(75);
         mem2Column.setCellValueFactory(new PropertyValueFactory<>("processMemory"));
         
-        TableColumn<Process, Double> arrival2Column = new TableColumn<>("Arrival Time");
+        TableColumn arrival2Column = new TableColumn<>("Arrival Time");
        // arrivalColumn.setMinWidth(75);
         arrival2Column.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         
-        TableColumn<Process, String> run2Column = new TableColumn<>("Run Time");
+        TableColumn run2Column = new TableColumn<>("Run Time");
         //runColumn.setMinWidth(75);
         run2Column.setCellValueFactory(new PropertyValueFactory<>("timeSpent"));
         
+       // this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
+       // this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
         
+        TableView readyTable = new TableView();
+  	  TableView waitingTable = new TableView();
         
-        readyTable = new TableView<>();
-        readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
+       
         readyTable.setItems(readyProcessList);
         readyTable.getColumns().addAll(nameColumn, memColumn, arrivalColumn, runColumn);
         
-        waitingTable = new TableView<>();
-        waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
         waitingTable.setItems(waitingProcessList);
         waitingTable.getColumns().addAll(name2Column, mem2Column, arrival2Column, run2Column);
         
@@ -160,15 +156,17 @@ public class gui extends Application {
         layout.setBottom(textArea);
        
         Scene scene = new Scene(layout, 1000, 600);
-        window.setScene(scene);
-        window.show();
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        
+        
         
         startSim();
     }
     
     public void startSim() throws InterruptedException {
-    	readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
-        waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
+    	this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
+        this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
 
         final long[] prevTime = {0};
         
@@ -188,25 +186,21 @@ public class gui extends Application {
             }
         }.start();
     }
-    
-    
-
 
     public void loop() throws InterruptedException {
-    	// Render GUI
-        readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
-        waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
-
+        // Render GUI
+        this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
+        this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
         
+
         // Run Simulator
         if (!Simulator.executeSolo && Simulator.executionCycles == 0) {
             return;
         } else {
             Simulator.executionCycles--;
         }
-        
+
         os.run();
-        System.out.println("GETS HERE");
     }
     
 }
