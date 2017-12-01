@@ -24,14 +24,12 @@ public class OperatingSystem {
 		
 		//If CPU empty and ready queue has process ready, send process to CPU
 		if(cpu.getCurrentProcess()==null&&scheduler.getReadyQueue().size()>0){
-			cpu.setCurrentProcess(scheduler.getReadyQueue().get(0));
+			cpu.setCurrentProcess(scheduler.getNextProcess());
 			
 		}else if(cpu.getCurrentProcess()!=null){
 			cpu.execute();
 			scheduler.incrementTimer();
 		}
-		
-		
 		
 		//Checks if process quantum time in CPU has been reached, if so, send to back of Ready Queue
 		if(scheduler.checkQuantumStatus()){

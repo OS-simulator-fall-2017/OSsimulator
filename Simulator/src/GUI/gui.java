@@ -197,7 +197,7 @@ public class gui extends Application {
         if (!Simulator.executeSolo && Simulator.executionCycles == 0) {
             return;
         } else {
-            Simulator.executionCycles--;
+            Simulator.executionCycles--;  
         }
 
         os.run();

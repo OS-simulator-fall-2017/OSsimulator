@@ -32,10 +32,10 @@ public class CPU {
 	
 	
 	public void execute(){
-		currentProcess.incrementTime();
-		text = currentProcess.getNextCommand();
+		
+		
 		if(currentProcess.getCalcTime()==0){
-			
+			text = currentProcess.getNextCommand();
 			switch (text){
 			case "CALCULATE":
 				currentProcess.setState(ProcessState.RUN);
@@ -56,11 +56,11 @@ public class CPU {
 			
 			}
 		}
-		else
+		else{
 			currentProcess.decrementCalcTime();
-		
-		
-		if(text==null&&currentProcess.getCalcTime()==0){
+			currentProcess.incrementTime();
+		}
+		if(currentProcess.getProcessCommands().size()==0&&currentProcess.getCalcTime()==0){
 			currentProcess.setState(ProcessState.EXIT);
 			this.currentProcess=null;
 		}

@@ -87,14 +87,20 @@ public class Scheduler {
     		return false;
     }
     
-    public void sendToBack(){
-    	Process temp = this.queue.getReadyQueue().remove(0);
+    public static void sendToBack(){
+    	Process temp = queue.getReadyQueue().remove(0);
     	temp.setState(ProcessState.READY);
     	queue.addReadyProcess(temp);
     	timer=0;
     }
     
     public static Process getNextProcess(){
-    	return getReadyQueue().get(0);
+    	for(int i=0;i<queue.getReadyQueue().size();i++){
+    		if(queue.getReadyQueue().get(0).getState()==ProcessState.READY){
+    			return queue.getReadyQueue().get(0);
+    		}else
+    			sendToBack();
+    	}
+    	return null;
     }
 }
