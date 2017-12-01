@@ -22,23 +22,38 @@ public class OperatingSystem {
 		scheduler.updateQueues();
 		
 		
-		//If CPU empty and ready queue has process ready, send process to CPU
-		if(cpu.getCurrentProcess()==null&&scheduler.getReadyQueue().size()>0){
-			cpu.setCurrentProcess(scheduler.getNextProcess());
+		//If CPU empty and ready queue has process ready, send process to CPU.. else if the cpu has a process then execute
+		if(cpu.getCurrentProcess()==null&&Scheduler.getReadyQueue().size()>0){
+			cpu.setCurrentProcess(Scheduler.getNextProcess());
 			
-		}else if(cpu.getCurrentProcess()!=null){
-			cpu.execute();
-			scheduler.incrementTimer();
 		}
+		
+		if(cpu.getCurrentProcess()!=null){
+			scheduler.incrementTimer();
+			cpu.execute();	
+		}
+		
+		//Goes through ready queue to update IO flags
+		for (int i=0;i<Scheduler.getReadyQueue().size();i++){
+			if(Scheduler.getReadyQueue().get(i).getIOFlag()!=0){
+				Scheduler.getReadyQueue().get(i).decrementIOFlag();
+			}
+			if(Scheduler.getReadyQueue().get(i).getIOFlag()==0&&Scheduler.getReadyQueue().get(i).getState()==ProcessState.WAIT){
+					Scheduler.getReadyQueue().get(i).setState(ProcessState.READY);
+				}
+		}
+		
 		
 		//Checks if process quantum time in CPU has been reached, if so, send to back of Ready Queue
 		if(scheduler.checkQuantumStatus()){
-			scheduler.sendToBack();
+			cpu.getCurrentProcess().setState(ProcessState.READY);
+			Scheduler.sendToBack();
 			cpu.setCurrentProcess(Scheduler.getNextProcess());
 		}
 		else{
 			return;
 		}
 		 
-}
+	}
+
 }

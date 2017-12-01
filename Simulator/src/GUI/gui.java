@@ -174,14 +174,14 @@ public class gui extends Application {
 
        new AnimationTimer() {
             @Override public void handle(long currentNanoTime) {
-                if (currentNanoTime > prevTime[0] + 90000000) {
+                if (currentNanoTime > prevTime[0] + 70000000) {
                     try {
                         loop();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
-                    prevTime[0] = currentNanoTime + 90000000;
+                    prevTime[0] = currentNanoTime + 70000000;
                 }
             }
         }.start();

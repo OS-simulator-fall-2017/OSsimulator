@@ -17,7 +17,7 @@ public class Process {
 	private int timeLeftToComplete=0;
 	private int ioRequestsPerformed=0;
 	private int arrivalTime;
-	private int IOflag=0;
+	private int ioFlag=0;
 
 	private ArrayList <String> processCommands = new ArrayList<>();
 	
@@ -59,7 +59,7 @@ public class Process {
 		this.calcTime = t;
 	}
 	public void setIOFlag(int t){
-		this.IOflag = t + Clock.getClock();
+		this.ioFlag = t;
 		this.setState(ProcessState.WAIT);
 	}
 	
@@ -116,16 +116,12 @@ public class Process {
 		this.calcTime--;
 	}
 	
-	public void IORequest(int time){
-		this.IOflag= Clock.getClock()+time;
-		this.processState=ProcessState.WAIT;
+	public int getIOFlag(){
+		return this.ioFlag;
 	}
 	
-	public boolean getIOWait(){
-		if(this.IOflag<=Clock.getClock()){
-			return true;
-		}
-		else return false;
+	public void decrementIOFlag(){
+		this.ioFlag--;
 	}
 	
 	public void printProcessInfo(){

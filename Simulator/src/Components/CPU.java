@@ -32,7 +32,7 @@ public class CPU {
 	
 	
 	public void execute(){
-		
+	
 		
 		if(currentProcess.getCalcTime()==0){
 			text = currentProcess.getNextCommand();
@@ -44,10 +44,14 @@ public class CPU {
 			case "IO":
 				currentProcess.incrementIORequests();
 				currentProcess.setIOFlag(rand.nextInt(26)+25);
-				System.out.println(currentProcess.getIOWait());
+				System.out.println("FLAG:"+currentProcess.getIOFlag());
+				
+				Scheduler.resetTimer();
 				break;
 			case "YIELD":
 				currentProcess.setState(ProcessState.READY);
+				Scheduler.sendToBack();
+				currentProcess=null;
 				break;
 			case "OUT":
 				currentProcess.printProcessInfo();
@@ -61,8 +65,9 @@ public class CPU {
 		}
 		if(currentProcess.getProcessCommands().size()==0&&currentProcess.getCalcTime()==0){
 			currentProcess.setState(ProcessState.EXIT);
-			System.out.println("FINAL CYCLES TAKEN:" + currentProcess.getTimeSpent());
-			this.currentProcess=null;
+			currentProcess=null;
+			Scheduler.resetTimer();
+			System.out.println("CLOCK:" + Clock.getClock());
 		}
 		
 

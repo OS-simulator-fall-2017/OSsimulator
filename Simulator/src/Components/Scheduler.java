@@ -9,10 +9,6 @@ public class Scheduler {
 	private final int quantum = 10;
 	private static int timer = 0;
 	
-	public static void insertPCB(Process process) {
-	        process.setArrivalTime(Clock.getClock());
-	        queue.enqueueReadyProcess(process);
-	    }
 	
 	//Inserts process to either ready queue or waiting queue, wherever it can 'fit'
 	public static void insertProcess(Process p){
@@ -47,8 +43,8 @@ public class Scheduler {
 	public void incrementTimer(){
 		this.timer++;
 	}
-	public void resetTimer(){
-		this.timer=0;
+	public static void resetTimer(){
+		timer=0;
 	}
 	
 	//Returns readyQueue
@@ -89,7 +85,7 @@ public class Scheduler {
     
     public static void sendToBack(){
     	Process temp = queue.getReadyQueue().remove(0);
-    	temp.setState(ProcessState.READY);
+    	//temp.setState(ProcessState.READY);
     	queue.addReadyProcess(temp);
     	timer=0;
     }
