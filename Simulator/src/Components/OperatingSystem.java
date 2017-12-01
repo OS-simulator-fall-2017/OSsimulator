@@ -17,6 +17,7 @@ public class OperatingSystem {
 	
 	public void run(){
 		
+		Clock.tickClock();
 		//Updates the queues first, this should put next process first in ready queue
 		scheduler.updateQueues();
 		
@@ -25,20 +26,16 @@ public class OperatingSystem {
 		if(cpu.getCurrentProcess()==null&&scheduler.getReadyQueue().size()>0){
 			cpu.setCurrentProcess(scheduler.getReadyQueue().get(0));
 			
-		}
-		
-		
-		if(cpu.getCurrentProcess()!=null){
+		}else if(cpu.getCurrentProcess()!=null){
 			cpu.execute();
+			scheduler.incrementTimer();
 		}
-		
-		Clock.tickClock();
-		scheduler.incrementTimer();
 		
 		
 		//Checks if process quantum time in CPU has been reached, if so, send to back of Ready Queue
 		if(scheduler.checkQuantumStatus()){
 			scheduler.sendToBack();
+			cpu.setCurrentProcess(Scheduler.getNextProcess());
 		}
 		else{
 			return;

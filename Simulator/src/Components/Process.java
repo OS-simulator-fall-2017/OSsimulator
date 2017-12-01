@@ -1,6 +1,7 @@
 package Components;
 import GUI.GuiPrompt;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Process {
 
@@ -25,7 +26,7 @@ public class Process {
 	public Process(String processName, int mem, ArrayList<String>operationString){
 		this.processName = processName;
 		this.processMemory = mem;
-		this.processCommands.equals(operationString);
+		this.processCommands=operationString;
 		this.processState = ProcessState.NEW;
 		for (int i=0;i<operationString.size();i++){
 			if(operationString.get(i).equals("CALCULATE")){
@@ -97,9 +98,9 @@ public class Process {
 		return this.processCommands;
 	}
 	public String getNextCommand(){
-		if(this.processCommands.size()>0)
+		if(this.processCommands.size()>0){
 		return this.processCommands.remove(0);
-		return null;
+		}else return null;
 	}
 	
 	
@@ -131,14 +132,11 @@ public class Process {
 		GuiPrompt.println("PROCESS STATE: " + processState);
 		GuiPrompt.println("CPU TIME LEFT FOR PROCESS COMPLETION: " + this.timeLeftToComplete);
 		GuiPrompt.println("Arrival Time: " + this.arrivalTime);
+		GuiPrompt.println("PCB: " + this.getProcessCommands().toString());
 		GuiPrompt.println("______________________________________");
 		
 	}
 	
-	/*public void exit(){
-		this.processState = ProcessState.EXIT;
-		Scheduler
-	}*/
 	
 	
 }

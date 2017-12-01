@@ -65,10 +65,11 @@ public class CommandLine {
 	    //Starts parsing through the actual file defined by user input(Function-Stores input)
 	    private static void load(String file) {
 	        requestFile.parseFile(file);
-	        if(!requestFile.getQueue().isEmpty()) {
+	        if(requestFile.getQueue()!=null) {
 	            int size = Integer.valueOf(requestFile.getQueue().remove(0));
-	            //Scheduler.insertProcess(new Process(file, size, requestFile.getQueue()));
+	            //System.out.println(requestFile.getQueue().remove(0));
 	            Process temp = new Process(file,size,requestFile.getQueue());
+	            temp.printProcessInfo();
 	            Scheduler.insertProcess(temp);
 	           
 	        }

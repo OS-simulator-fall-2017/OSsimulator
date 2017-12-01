@@ -88,8 +88,13 @@ public class Scheduler {
     }
     
     public void sendToBack(){
-    	Process temp = this.removeProcess();
+    	Process temp = this.queue.getReadyQueue().remove(0);
     	temp.setState(ProcessState.READY);
-    	Scheduler.insertProcess(temp);
+    	queue.addReadyProcess(temp);
+    	timer=0;
+    }
+    
+    public static Process getNextProcess(){
+    	return getReadyQueue().get(0);
     }
 }

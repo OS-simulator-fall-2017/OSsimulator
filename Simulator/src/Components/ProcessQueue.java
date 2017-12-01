@@ -72,7 +72,7 @@ public class ProcessQueue {
 	
 	public void updateQueues(){
 		for (int i=0;i<this.readyQueue.size();i++){
-			if(this.readyQueue.get(i).getState().equals(ProcessState.EXIT)){
+			if(this.readyQueue.get(i).getState()==(ProcessState.EXIT.toString())){
 				this.freeMemory+=this.readyQueue.get(i).getProcessMemory();
 				this.readyQueue.remove(i);
 			}
@@ -90,6 +90,10 @@ public class ProcessQueue {
 	public void resetQueues(){
 		this.readyQueue.clear();
 		this.waitingQueue.clear();
+	}
+	
+	public void addReadyProcess(Process p){
+		this.readyQueue.add(p);
 	}
 	
 	
