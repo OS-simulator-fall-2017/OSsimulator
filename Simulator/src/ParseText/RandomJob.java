@@ -4,21 +4,13 @@ import java.io.File;
 
 import Components.Process;
 import Components.Scheduler;
-import Components.Clock;
-import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.Random;
 public class RandomJob {
 	
-	 private ArrayList<Process> genPrograms = new ArrayList<>();
-
 	 public static void jobGenerator() {      
-		 ArrayList<Process> genPrograms = new ArrayList<>();
 	      File f = null;
 	      File[] paths;
 	      ParseText job = new ParseText();
-	  	  Process p = null;
-	  	  int i = 0;
 	  	  Random indicies = new Random();
 	      try {  
 	         // create new file
@@ -31,6 +23,7 @@ public class RandomJob {
 	         int size = Integer.valueOf(job.getQueue().remove(0));
 	         Process temp = new Process(name, size, job.getQueue());
 	         Scheduler.insertProcess(temp);
+	         Scheduler.setArrivalTime(temp);
 	      
 	         
 	      } catch(Exception e) {

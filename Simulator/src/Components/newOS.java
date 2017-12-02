@@ -19,7 +19,9 @@ public class newOS {
 	//private String input = gui.CommandInput.getText();
 	
 	
-	
+	public int getWaitingQueueLength(){
+			return scheduler.getWaitingQueue().size();
+		}
 	public void run(){
 		
 		Clock.tickClock();
@@ -37,24 +39,28 @@ public class newOS {
 			cpu.core1.setCurrentProcess(Scheduler.getNextProcess());
 			if(cpu.core1.getCurrentProcess()!=null)
 			cpu.core1.getCurrentProcess().taken();
+			cpu.core1.getCurrentProcess().setArrivalTime(Clock.getClock());
 			cpu.core1.getScheduler().resetTimer();		
 		}
 		if(cpu.getCurrentProcess(cpu.core2)==null&&Scheduler.getReadyQueue().size()>0){
 			cpu.core2.setCurrentProcess(Scheduler.getNextProcess());
 			if(cpu.core2.getCurrentProcess()!=null)
 			cpu.core2.getCurrentProcess().taken();
+			cpu.core2.getCurrentProcess().setArrivalTime(Clock.getClock());
 			cpu.core2.getScheduler().resetTimer();
 		}
 		if(cpu.getCurrentProcess(cpu.core3)==null&&Scheduler.getReadyQueue().size()>0){
 			cpu.core3.setCurrentProcess(Scheduler.getNextProcess());
 			if(cpu.core3.getCurrentProcess()!=null)
 			cpu.core3.getCurrentProcess().taken();
+			cpu.core3.getCurrentProcess().setArrivalTime(Clock.getClock());
 			cpu.core3.getScheduler().resetTimer();		
 		}
 		if(cpu.getCurrentProcess(cpu.core4)==null&&Scheduler.getReadyQueue().size()>0){
 			cpu.core4.setCurrentProcess(Scheduler.getNextProcess());
 			if(cpu.core4.getCurrentProcess()!=null)
 			cpu.core4.getCurrentProcess().taken();
+			cpu.core4.getCurrentProcess().setArrivalTime(Clock.getClock());
 			cpu.core4.getScheduler().resetTimer();
 		}
 		
@@ -73,7 +79,7 @@ public class newOS {
 					if(Scheduler.getReadyQueue().get(i).getIOFlag()!=0){
 						Scheduler.getReadyQueue().get(i).decrementIOFlag();
 					}
-					else if(Scheduler.getReadyQueue().get(i).getIOFlag()==0&&Scheduler.getReadyQueue().get(i).getState()==ProcessState.WAIT){
+					else if(Scheduler.getReadyQueue().get(i).getIOFlag()==0&&Scheduler.getReadyQueue().get(i).getProcessState()==ProcessState.WAIT){
 							Scheduler.getReadyQueue().get(i).setState(ProcessState.READY);
 						}
 				}
@@ -84,6 +90,7 @@ public class newOS {
 		//Checks if process quantum time in CPU has been reached, if so, send to back of Ready Queue
 		if(scheduler.checkQuant(cpu.core1)){
 			cpu.core1.getCurrentProcess().setState(ProcessState.READY);
+			cpu.core1.getCurrentProcess().free();
 			Process temp = cpu.core1.getCurrentProcess();
 			Scheduler.removeProcess(temp);
 			Scheduler.getReadyQueue().add(temp);
@@ -95,9 +102,10 @@ public class newOS {
 		 
 		if(scheduler.checkQuant(cpu.core2)){
 			cpu.core2.getCurrentProcess().setState(ProcessState.READY);
+			cpu.core2.getCurrentProcess().free();
 			Process temp = cpu.core2.getCurrentProcess();
-			Scheduler.removeProcess(temp);
-			Scheduler.getReadyQueue().add(temp);
+			scheduler.removeProcess(temp);
+			scheduler.getReadyQueue().add(temp);
 			cpu.core2.setCurrentProcess(null);
 		}
 		else{
@@ -106,9 +114,10 @@ public class newOS {
 		
 		if(scheduler.checkQuant(cpu.core3)){
 			cpu.core3.getCurrentProcess().setState(ProcessState.READY);
+			cpu.core3.getCurrentProcess().free();
 			Process temp = cpu.core3.getCurrentProcess();
-			Scheduler.removeProcess(temp);
-			Scheduler.getReadyQueue().add(temp);
+			scheduler.removeProcess(temp);
+			scheduler.getReadyQueue().add(temp);
 			cpu.core3.setCurrentProcess(null);
 		}
 		else{
@@ -117,9 +126,10 @@ public class newOS {
 		 
 		if(scheduler.checkQuant(cpu.core4)){
 			cpu.core4.getCurrentProcess().setState(ProcessState.READY);
+			cpu.core4.getCurrentProcess().free();
 			Process temp = cpu.core4.getCurrentProcess();
-			Scheduler.removeProcess(temp);
-			Scheduler.getReadyQueue().add(temp);
+			scheduler.removeProcess(temp);
+			scheduler.getReadyQueue().add(temp);
 			cpu.core4.setCurrentProcess(null);
 		}
 		else{

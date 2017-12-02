@@ -18,7 +18,7 @@ public class STR {
 	public static Process getNextProcess(){
 		Process temp = queue.getReadyQueue().get(0);
 		for(int i=0;i<queue.getReadyQueue().size();i++){
-			if(queue.getReadyQueue().get(i).getTimeLeft()<temp.getTimeLeft() && queue.getReadyQueue().get(i).getState()==ProcessState.READY){
+			if(queue.getReadyQueue().get(i).getTimeLeft()<temp.getTimeLeft() && queue.getReadyQueue().get(i).getProcessState()==ProcessState.READY){
 					temp = queue.getReadyQueue().get(i);
 			}
 		}

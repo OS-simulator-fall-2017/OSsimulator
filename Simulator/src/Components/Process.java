@@ -77,7 +77,7 @@ public class Process {
 	public int getPriority(){
 		return this.processPriority;
 	}
-	public ProcessState getState(){
+	public ProcessState getProcessState(){
 		return this.processState;
 	}
 	public int getTimeLeft(){ 
@@ -136,12 +136,13 @@ public class Process {
 	
 	public void printProcessInfo(){
 		GuiPrompt.println("______________________________________");
-		GuiPrompt.println("PROCESS NAME: " + processName);
-		GuiPrompt.println("PROCESS STATE: " + processState);
-		GuiPrompt.println("CPU TIME LEFT FOR PROCESS COMPLETION: " + this.timeLeftToComplete);
-		GuiPrompt.println("Arrival Time: " + this.arrivalTime);
-		//GuiPrompt.println("PCB: " + this.getProcessCommands().toString());
-		GuiPrompt.println("______________________________________");
+		GuiPrompt.println("\n" + "PROCESS NAME: " + processName); 
+		GuiPrompt.println("\n" + "PROCESS STATE: " + processState);
+		GuiPrompt.println("\n" + "CPU TIME LEFT FOR PROCESS COMPLETION: " + this.timeLeftToComplete);
+		GuiPrompt.println("\n" + "Arrival Time: " + this.arrivalTime);
+		GuiPrompt.println("\n" + "PCB: " + this.getProcessCommands().toString());
+		GuiPrompt.println("\n" + "______________________________________");
+
 		
 	}
 	

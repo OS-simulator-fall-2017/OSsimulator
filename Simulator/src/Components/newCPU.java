@@ -31,9 +31,8 @@ public class newCPU{
 	
 	//Retrieves the current process from the core you want 
 	public Process getCurrentProcess(Core core){
-		if(core.getCurrentProcess() != null)
 			return core.getCurrentProcess();
-		else return null;
+		
 	}
 	
 	public void setQueues(){
