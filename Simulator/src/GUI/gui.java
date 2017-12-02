@@ -2,13 +2,14 @@ package GUI;
 
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import Components.ProcessQueue;
 import Components.OperatingSystem;
 import javafx.animation.AnimationTimer;
 import Components.Scheduler;
 import Components.Simulator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.io.File;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -41,15 +42,10 @@ public class gui extends Application {
     public ArrayList<String> input;
     String temp;
     Random gen = new Random();
-	private final int mark = 20;
-   
-   
+    public boolean closeSim = false;
+    
     public static void main(String[] args) {
         launch(args);
-    }
-    
-    public TextField getInput(String Input){
-    	return this.CommandInput;
     }
     
     @Override
@@ -60,58 +56,55 @@ public class gui extends Application {
     	        
       //Ready Columns
         TableColumn nameColumn = new TableColumn<Process, String>("Process");
-        //nameColumn.setMinWidth(150);
         nameColumn.setCellValueFactory(new PropertyValueFactory<Process, String>("processName"));
         
         TableColumn memColumn = new TableColumn<Process, String>("Memory Size");
-       // memColumn.setMinWidth(75);
         memColumn.setCellValueFactory(new PropertyValueFactory<Process, String>("processMemory"));
         
         TableColumn arrivalColumn = new TableColumn<Process, String>("Arrival Time");
-       // arrivalColumn.setMinWidth(75);
         arrivalColumn.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         
         TableColumn runColumn = new TableColumn<Process, String>("Run Time");
         runColumn.setMinWidth(75);
         runColumn.setCellValueFactory(new PropertyValueFactory<Process, String>("timeSpent"));
         
+        TableColumn stateColumn = new TableColumn<Process, String>("Process State");
+        stateColumn.setMinWidth(75);
+        stateColumn.setCellValueFactory(new PropertyValueFactory<Process, String>("processState"));
         
         //Waiting Columns
         TableColumn name2Column = new TableColumn<>("Program");
-       // nameColumn.setMinWidth(150);
         name2Column.setCellValueFactory(new PropertyValueFactory<Process, String>("processName"));
         
         TableColumn mem2Column = new TableColumn<>("Memory Size");
-        //mem2Column.setMinWidth(75);
         mem2Column.setCellValueFactory(new PropertyValueFactory<>("processMemory"));
         
         TableColumn arrival2Column = new TableColumn<>("Arrival Time");
-       // arrivalColumn.setMinWidth(75);
         arrival2Column.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         
         TableColumn run2Column = new TableColumn<>("Run Time");
-        //runColumn.setMinWidth(75);
         run2Column.setCellValueFactory(new PropertyValueFactory<>("timeSpent"));
         
-       // this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
-       // this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
+        TableColumn state2Column = new TableColumn<Process, String>("Process State");
+        state2Column.setMinWidth(75);
+        state2Column.setCellValueFactory(new PropertyValueFactory<Process, String>("processState"));
         
-        TableView readyTable = new TableView();
-  	  TableView waitingTable = new TableView();
+       TableView readyTable = new TableView();
+  	   TableView waitingTable = new TableView();
         
        
         readyTable.setItems(readyProcessList);
-        readyTable.getColumns().addAll(nameColumn, memColumn, arrivalColumn, runColumn);
+        readyTable.getColumns().addAll(nameColumn, memColumn, arrivalColumn, runColumn, stateColumn);
         
         waitingTable.setItems(waitingProcessList);
-        waitingTable.getColumns().addAll(name2Column, mem2Column, arrival2Column, run2Column);
+        waitingTable.getColumns().addAll(name2Column, mem2Column, arrival2Column, run2Column, state2Column);
         
         
         textArea = new TextArea();
         textArea.setEditable(false);
         textArea.setFocusTraversable(false);
         textArea.setPrefRowCount(3);
-        textArea.setPrefColumnCount(50);
+        textArea.setPrefColumnCount(30);
         textArea.autosize();
         
         this.CommandInput = new TextField();
@@ -120,7 +113,11 @@ public class gui extends Application {
         
         //Action dependent on user input
         button.setOnAction(e -> {
-        	 boolean valid = true;
+        	//check to see if the user wants to exit
+        	if(CommandInput.getText().equals("exit")){
+        		closeSim = true;
+        	}
+        	 boolean valid = true; //Prevents Static errors due to limitations
              if(!CommandInput.getText().trim().equals(null))
                  valid = CommandLine.storeInputs(CommandInput.getText());
              CommandInput.clear();
@@ -137,12 +134,15 @@ public class gui extends Application {
         waitingBox.setSpacing(10);
         Text waitingTitle = new Text("Waiting Queue");
         waitingTitle.setStyle("-fx-font-size: 15px");
+        waitingTitle.setStyle("-fx-background-color: white");
         waitingBox.getChildren().addAll(waitingTitle, waitingTable);
 
         VBox readyBox = new VBox();
         readyBox.setSpacing(10);
         Text readyTitle = new Text("Ready Queue");
         readyTitle.setStyle("-fx-font-size: 15px");
+        readyTitle.setStyle(STYLESHEET_CASPIAN);
+        readyTitle.setStyle("-fx-background-color: white");
         readyBox.getChildren().addAll(readyTitle, readyTable);
                  
         layout = new BorderPane();
@@ -150,34 +150,36 @@ public class gui extends Application {
         layout.setLeft(waitingBox);
         layout.setRight(readyBox);
         layout.setBottom(textArea);
+        layout.setStyle("-fx-background-color: beige");
        
         Scene scene = new Scene(layout, 1000, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
         
         
-        
         startSim();
     }
     
     public void startSim() throws InterruptedException {
-    	this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
-        this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
-
+    	
         final long[] prevTime = {0};
         
         loop();
 
        new AnimationTimer() {
-            @Override public void handle(long currentNanoTime) {
-                if (currentNanoTime > prevTime[0] + 1000) {
-                    try {
-                        loop();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    prevTime[0] = currentNanoTime + 1000;
+            @Override public void handle(long runTime) {
+                if (runTime > prevTime[0] + 100000000) {
+                        try {
+							loop();
+							 if(closeSim){
+						        	Scheduler.resetScheduler();
+						        	Platform.exit();
+						        }
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+                    prevTime[0] = runTime + 100000000;
                 }
             }
         }.start();
@@ -188,17 +190,19 @@ public class gui extends Application {
         this.readyProcessList.setAll(Scheduler.getReadyQueue().stream().collect(Collectors.toList()));
         this.waitingProcessList.setAll(Scheduler.getWaitingQueue().stream().collect(Collectors.toList()));
         
+        //random generate job files
         if(gen.nextInt(5) == 1) {
 			RandomJob.jobGenerator();
-		}
-
+			}
         // Run Simulator
-        if (!Simulator.executeSolo && Simulator.executionCycles == 0) {
+        if (Simulator.executionCycles == 0 && !Simulator.executeSolo) {
             return;
         } else {
             Simulator.executionCycles--;  
         }
-
+        
+        //check if exit command is executed
+       
         os.run();
     }
     

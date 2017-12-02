@@ -2,6 +2,7 @@ package Components;
 import java.awt.TextField;
 import Components.Process;
 import GUI.GuiPrompt;
+import GUI.gui;
 import ParseText.ParseText;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,6 +18,7 @@ public class CommandLine {
 	//Takes job file and stores each token in our array list 
 	 private static final ParseText userInput = new ParseText();
 	 private static final ParseText requestFile = new ParseText();
+	
 
 	//Function for determining next action based on input
 	  public static boolean storeInputs(String input) {
@@ -57,7 +59,7 @@ public class CommandLine {
 	            	}else
 	            	exe(); break;
 	            case "reset": reset(); break;
-	            //case "exit": exit(); break;
+	            case "exit": exit(); break;
 	            default: break;
 	        } 
 	    }
@@ -93,6 +95,10 @@ public class CommandLine {
   	    	}
   	    	
   	    }
+	    
+	    public static boolean exit(){
+	    	return true;
+	    }
   	    
 	    public static void mem(){
   	    	int i = Scheduler.getUsedMemory();
@@ -104,6 +110,7 @@ public class CommandLine {
   	    	Clock.resetClock();
   	    	Scheduler.resetScheduler();
   	    	GuiPrompt.clear();
+  	  
   	    }
   	    
   	   

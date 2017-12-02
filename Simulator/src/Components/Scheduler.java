@@ -33,7 +33,7 @@ public class Scheduler {
 		return p.getArrivalTime();
 	}
 	//Sets the arrival time of the process to the current reading of the clock
-	public void setArrivalTime(Process p){
+	public static void setArrivalTime(Process p){
 		p.setArrivalTime(Clock.getClock());
 	}
 	
@@ -95,7 +95,7 @@ public class Scheduler {
     
     public static Process getNextProcess(){
     	for(int i=0;i<queue.getReadyQueue().size();i++){
-    		if(queue.getReadyQueue().get(i).getState()==ProcessState.READY){
+    		if(queue.getReadyQueue().get(i).getProcessState()==ProcessState.READY){
     			return queue.getReadyQueue().get(i);
     		}
     	}
