@@ -116,6 +116,8 @@ public class CommandLine {
   	    	Simulator.executeSolo=true;
   	    	Simulator.executionCycles=0;
   	    }
+	    
+
   	    
 	    
 	    

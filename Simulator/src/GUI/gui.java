@@ -2,10 +2,10 @@ package GUI;
 
 
 import javafx.application.Application;
-import Components.OperatingSystem;
 import javafx.animation.AnimationTimer;
 import Components.Scheduler;
 import Components.Simulator;
+import Components.newOS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.File;
@@ -33,7 +33,8 @@ public class gui extends Application {
 	 private final ObservableList<Process> readyProcessList = FXCollections.observableArrayList();
 	 private final ObservableList<Process> waitingProcessList = FXCollections.observableArrayList();
 	
-	OperatingSystem os = new OperatingSystem();
+	//OperatingSystem os = new OperatingSystem();
+	newOS os = new newOS();
     Button button;
     private BorderPane layout;
     public static TextField CommandInput;
@@ -170,14 +171,14 @@ public class gui extends Application {
 
        new AnimationTimer() {
             @Override public void handle(long currentNanoTime) {
-                if (currentNanoTime > prevTime[0] + 1000) {
+                if (currentNanoTime > prevTime[0] + 1) {
                     try {
                         loop();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
-                    prevTime[0] = currentNanoTime + 1000;
+                    prevTime[0] = currentNanoTime + 1;
                 }
             }
         }.start();
@@ -191,7 +192,7 @@ public class gui extends Application {
         if(gen.nextInt(5) == 1) {
 			RandomJob.jobGenerator();
 		}
-
+		
         // Run Simulator
         if (!Simulator.executeSolo && Simulator.executionCycles == 0) {
             return;

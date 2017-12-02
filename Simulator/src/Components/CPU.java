@@ -5,16 +5,17 @@ import java.util.Random;
 
 import GUI.GuiPrompt;
 import GUI.gui;
+/*
+public class CPU extends Thread{
 
-public class CPU {
-
+	
 	private String text;
 	private Process currentProcess;
 	Random rand = new Random();
 	
-
+	
+	
 	 public static int tickClock(){
-
 	        return Clock.tickClock();
 	    }
 
@@ -70,19 +71,15 @@ public class CPU {
 			currentProcess.setState(ProcessState.EXIT);
 			this.currentProcess=null;
 		}
-		
-		/*
-		if(currentProcess.getProcessCommands().size()==0&&currentProcess.getCalcTime()==0){
-			currentProcess.setState(ProcessState.EXIT);
-			currentProcess=null;
-			Scheduler.resetTimer();
-			System.out.println("CLOCK:" + Clock.getClock());
-		}
-		*/
-		
+				
 
+	}
+	
+	@Override
+	public void run(){
+		execute();
 	}
 
 	
 	
-}
+}*/

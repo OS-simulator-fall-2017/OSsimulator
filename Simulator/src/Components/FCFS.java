@@ -1,6 +1,6 @@
 package Components;
 import java.util.ArrayList;
-
+//First come First Serve Scheduler
 public class FCFS {
 	
 	private static ProcessQueue queue = new ProcessQueue();

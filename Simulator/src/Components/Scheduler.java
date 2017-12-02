@@ -46,6 +46,8 @@ public class Scheduler {
 	public static void incrementTimer(){
 		timer++;
 	}
+	
+	//Reset quantum timer
 	public void resetTimer(){
 		timer=0;
 	}
@@ -85,7 +87,14 @@ public class Scheduler {
     	}else
     		return false;
     }
+    public boolean checkQuant(Core core){
+    	if(core.getTimer()==quantum){
+    		return true;
+    	}else
+    		return false;
+    }
     
+    //Pops the first process off the top of the array list and send it to the back
     public void sendToBack(){
     	Process temp = queue.getReadyQueue().remove(0);
     	//temp.setState(ProcessState.READY);
@@ -93,9 +102,10 @@ public class Scheduler {
     	this.timer=0;
     }
     
+    //Method for finding the next process to send to the CPU
     public static Process getNextProcess(){
     	for(int i=0;i<queue.getReadyQueue().size();i++){
-    		if(queue.getReadyQueue().get(i).getState()==ProcessState.READY){
+    		if(queue.getReadyQueue().get(i).getState()==ProcessState.READY && queue.getReadyQueue().get(i).getTag()==false){
     			return queue.getReadyQueue().get(i);
     		}
     	}

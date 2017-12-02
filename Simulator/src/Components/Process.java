@@ -19,8 +19,18 @@ public class Process {
 	private int arrivalTime;
 	private int ioFlag=0;
 	private ArrayList <String> processCommands = new ArrayList<>();
+	private boolean tag=false;
 	
 	
+	public void taken(){
+		tag=true;
+	}
+	public void free(){
+		tag=false;
+	}
+	public boolean getTag(){
+		return this.tag;
+	}
 	//Initializes process with the name, memory size, and array list of operation strings within process
 	public Process(String processName, int mem, ArrayList<String>operationString){
 		this.processName = processName;
@@ -71,7 +81,7 @@ public class Process {
 		return this.processState;
 	}
 	public int getTimeLeft(){ 
-		return this.timeLeftToComplete;
+		return this.timeLeftToComplete-this.timeSpent;
 	}
 	public int getProcessMemory(){
 		return this.processMemory;
@@ -123,12 +133,14 @@ public class Process {
 		this.ioFlag--;
 	}
 	
+	
 	public void printProcessInfo(){
+		GuiPrompt.println("______________________________________");
 		GuiPrompt.println("PROCESS NAME: " + processName);
 		GuiPrompt.println("PROCESS STATE: " + processState);
 		GuiPrompt.println("CPU TIME LEFT FOR PROCESS COMPLETION: " + this.timeLeftToComplete);
 		GuiPrompt.println("Arrival Time: " + this.arrivalTime);
-		GuiPrompt.println("PCB: " + this.getProcessCommands().toString());
+		//GuiPrompt.println("PCB: " + this.getProcessCommands().toString());
 		GuiPrompt.println("______________________________________");
 		
 	}

@@ -1,3 +1,4 @@
+/*
 package Components;
 
 import java.io.File;
@@ -17,6 +18,7 @@ public class OperatingSystem {
 	private CPU cpu = new CPU();
 	Scanner scan = new Scanner(System.in);
 	//private String input = gui.CommandInput.getText();
+	
 	
 	
 	public void run(){
@@ -73,3 +75,4 @@ public class OperatingSystem {
 	}
 
 }
+*/
